@@ -1,5 +1,3 @@
-<%@page import="modelo.BestCliente"%>
-<%@page import="modelo.BestCliente"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -13,16 +11,17 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!-- https://www.javatpoint.com/php-pagination ----- PAGINACIÓN ---->
+
         <meta charset="utf-8" />
         <meta
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
             />
         <meta name="description" content="" />
-        <meta name="author" content="" />
+        <meta name="author" content="jrm91" />
 
-        <title>Filtro usuarios</title>
+        <title><img src="imagenes/logoWhite.svg" width="2400" height="1295" alt="logoWhite"/>
+            NIKE Pedidos tramitados</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -43,10 +42,8 @@
             rd = request.getRequestDispatcher("indexError.jsp");
             rd.forward(request, response);
         }
-
+        ArrayList<Pedido> listaDePedidos = DB.pedidosTramitados();
         DecimalFormat df = new DecimalFormat("#.00");
-        ArrayList<Pedido> lista = (ArrayList<Pedido>)sesion.getAttribute("pedidosTramitadosUsiario");
-
 
     %>
     <body>
@@ -77,6 +74,11 @@
                         >#</a
                     >
                     <a
+                        href="vistaAdmin.jsp"
+                        class="list-group-item list-group-item-action bg-white herramientasLinks"
+                        >Inicio</a
+                    >
+                    <a
                         href="pedidosTramitados.jsp"
                         class="list-group-item list-group-item-action bg-white herramientasLinks"
                         >Pedidos Tramitados</a
@@ -98,14 +100,9 @@
                     >
                     <a
                         href="pedidosPorUsuario.jsp"
-                        class="list-group-item list-group-item-action bg-dark herramientasLinks active"
-                        >Filtrar por usuario</a
+                        class="list-group-item list-group-item-action bg-white herramientasLinks"
+                        >Ver pedidos de un usuario</a
                     > 
-                    <form class="form-group" action="ServletFiltroUsers" method="POST">
-                        <label class="font-weight-bold">Username:</label><input class="form-control" type="text" name="username">
-
-                        <input class="btn btn-outline-info" type="submit" value="Filtrar">
-                    </form>
                     <a
                         href="pedidosPorProducto.jsp"
                         class="list-group-item list-group-item-action bg-white herramientasLinks"
@@ -115,11 +112,10 @@
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
-<!-- 
--->
+
             <!-- Page Content -->
             <div id="page-content-wrapper">
-                <nav class="navbar navbar-expand-lg navbar-white bg-white ">
+                <nav class="navbar navbar-expand-lg navbar-white bg-light ">
                     <a href class="lead text-dark font-weight-bold" id="menu-toggle"
                        >Herramientas de administración</a
                     >
@@ -136,7 +132,7 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <ul class="navbar-nav ml-auto  mt-lg-2 ">
                         <li class="nav-item">
                             <p class="lead font-weight-bold text-center justify-content-center  p-1"><%=user.getUsername()%></p>
                         </li>
@@ -152,25 +148,24 @@
                     </ul>
                 </nav>
                 <!-- CONTAINER LOG + DINAMIC PAGE -->
-                <div class="container-fluid">
+                <div class="container-fluid mt-5">
                     <h1 class="font-weight-bold">Pedidos tramitados</h1>
                     <!-- CARRITO -->
                     <table class="table table-dark table-striped text-center">
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">Gastado</th>
-                                <th scope="col">Fecha</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Fecha trámite</th>
                                 <th scope="col">Usuario</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Estado</th>
-
                             </tr>
                         </thead>
-                       
-                        <%if (lista != null) {%>
-                        <%for (Pedido pedi : lista) {%>
-                        <%                    
+
+                        <%if (listaDePedidos != null) {%>
+                        <%for (Pedido pedi : listaDePedidos) {%>
+                        <%
                             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
                             String fechaC = formatoFecha.format(pedi.getFecha());
                             Usuario infoU = DB.infoUsuario(pedi.getUsuarios_idusuarios());
@@ -181,7 +176,7 @@
                                 estado = "Pendiente";
                             }
                         %>
-                       <tr>
+                        <tr>
                             <th scope="row"><a class="text-info" href="desglose.jsp?idPedido=<%=pedi.getIdpedidos()%>"><%=pedi.getIdpedidos()%> - Desglose</a></th>
                             <td class="align-middle"><%=df.format(pedi.getPrecio_total())%>€</td>
                             <td class="align-middle"><%=fechaC%></td>                              

@@ -21,7 +21,9 @@
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@1,700&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/79a941ea93.js" crossorigin="anonymous"></script>
         <!-- Custom styles for this template -->
         <link href="css/simple-sidebar.css" rel="stylesheet" />
         <link rel="stylesheet" href="css/index.css" />
@@ -152,7 +154,7 @@
                     <h2 class="display-3 parah2 mt-5">EQUÍPATE</h2>
 
                     <div class="container-fluid mt-5">
-                        <h4>Para hombre</h4>
+                        <h2 id="catFont">Hombre</h2>
                         <div class="row">
 
                             <%for (Producto info : lista) {%>
@@ -167,13 +169,15 @@
                                     data-toggle="modal"
                                     data-target="#exampleModal<%=info.getId_producto()%>"
                                     /></a>
-                                <p>Hombre</p>
-                                <p><%=info.getNombre_producto()%></p>
-                                <p>Precio: <%=info.getPrecio()%></p>
+                                <div class="descZapatilla">
+                                    <h5><%=info.getNombre_producto()%></h5>
+                                    <p class="price text-success"><%=info.getPrecio()%>€</p>
 
-                                <a href="ServletCarrito?idproducto=<%=info.getId_producto()%>&pathInfo=hombre.jsp" class="btn btn-primary btnAañadir"
-                                   >Añadir a la cesta</a
-                                >
+                                    <a href="ServletCarrito?idproducto=<%=info.getId_producto()%>&pathInfo=hombre.jsp" class="btn btn-outline-dark btnAañadir"
+                                       ><i class="fas fa-shopping-cart"></i> Añadir a la cesta </a
+                                    > 
+                                </div>
+
                             </div>
 
                             <%}%>

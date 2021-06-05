@@ -17,15 +17,15 @@
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
             />
         <meta name="description" content="" />
-        <meta name="author" content="" />
+        <meta name="author" content="" >
 
         <title>Desglose pedido</title>
 
         <!-- Bootstrap core CSS -->
-        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 
         <!-- Custom styles for this template -->
-        <link href="css/simple-sidebar.css" rel="stylesheet" />
+        <link href="css/simple-sidebar.css" rel="stylesheet"/>
         <link rel="stylesheet" href="css/index.css" />
     </head>
     <%
@@ -89,17 +89,17 @@
                         class="list-group-item list-group-item-action bg-white"
                         >Ordenar por fecha</a
                     > 
-                     <a
+                    <a
                         href="pedidosPorUsuario.jsp"
                         class="list-group-item list-group-item-action bg-white"
                         >Ver pedidos de un usuario</a
                     > 
-                     <a
+                    <a
                         href="pedidosPorProducto.jsp"
                         class="list-group-item list-group-item-action bg-white"
                         >Pedidos por producto</a
                     > 
-                   
+
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->

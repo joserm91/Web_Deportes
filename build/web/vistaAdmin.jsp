@@ -42,7 +42,7 @@
             rd.forward(request, response);
         }
         ArrayList<Pedido> listaDePedidos = DB.pedidosTramitados();
- DecimalFormat df = new DecimalFormat("#.00");
+        DecimalFormat df = new DecimalFormat("#.00");
 
     %>
     <body>
@@ -52,50 +52,65 @@
                 <div class="sidebar-heading text-center">
                     <img src="imagenes/admin.png" width="60px" alt="" srcset="" />
                 </div>
-                <div class="list-group list-group-flush">
-                      <a
+                <!-- acordeon -->
+                <div id="accordion" class="container-fluid">
+
+                    <h5 class="mb-0 text-center">
+                        <button class="btn btn-dark text-white collapsed " data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Herramientas
+                        </button>
+                    </h5>
+                </div>
+                <!-- acordeon -->
+                <div id="collapseTwo" class="collapse m-2" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <a
                         href="#"
-                        class="list-group-item list-group-item-action bg-white"
+                        class="list-group-item list-group-item-action bg-white herramientasLinks"
                         >#</a
                     >
                     <a
                         href="vistaAdmin.jsp"
-                        class="list-group-item list-group-item-action bg-white"
+                        class="list-group-item list-group-item-action bg-white herramientasLinks"
+                        >Inicio</a
+                    >
+                    <a
+                        href="pedidosTramitados.jsp"
+                        class="list-group-item list-group-item-action bg-white herramientasLinks"
                         >Pedidos Tramitados</a
                     >
                     <a
                         href="topVentas.jsp"
-                        class="list-group-item list-group-item-action bg-white"
+                        class="list-group-item list-group-item-action bg-white herramientasLinks"
                         >Top ventas</a
                     >
                     <a
                         href="mejoresClientes.jsp"
-                        class="list-group-item list-group-item-action bg-white"
+                        class="list-group-item list-group-item-action bg-white herramientasLinks" 
                         >Mejores clientes</a
                     >
                     <a
                         href="pedidosPorFecha.jsp"
-                        class="list-group-item list-group-item-action bg-white"
+                        class="list-group-item list-group-item-action bg-white herramientasLinks"
                         >Ordenar por fecha</a
                     >
-                     <a
+                    <a
                         href="pedidosPorUsuario.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Ver pedidos de un usuario</a
+                        class="list-group-item list-group-item-action bg-white herramientasLinks"
+                        >Filtrar por usuario</a
                     > 
-                     <a
+                    <a
                         href="pedidosPorProducto.jsp"
-                        class="list-group-item list-group-item-action bg-white"
+                        class="list-group-item list-group-item-action bg-white herramientasLinks"
                         >Pedidos por producto</a
                     > 
-                    
+
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
 
             <!-- Page Content -->
             <div id="page-content-wrapper">
-                <nav class="navbar navbar-expand-lg navbar-white bg-white ">
+                <nav class="navbar navbar-expand-lg navbar-white bg-light ">
                     <a href class="lead text-dark font-weight-bold" id="menu-toggle"
                        >Herramientas de administración</a
                     >
@@ -112,7 +127,7 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <ul class="navbar-nav ml-auto  mt-lg-2 ">
                         <li class="nav-item">
                             <p class="lead font-weight-bold text-center justify-content-center  p-1"><%=user.getUsername()%></p>
                         </li>
@@ -128,46 +143,9 @@
                     </ul>
                 </nav>
                 <!-- CONTAINER LOG + DINAMIC PAGE -->
-                <div class="container-fluid">
-                    <h1 class="font-weight-bold">Pedidos tramitados</h1>
-                    <!-- CARRITO -->
-                    <table class="table table-dark table-striped text-center">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Total</th>
-                                <th scope="col">Fecha trámite</th>
-                                <th scope="col">Usuario</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Estado</th>
-                            </tr>
-                        </thead>
-                       
-                        <%if (listaDePedidos != null) {%>
-                        <%for (Pedido pedi : listaDePedidos) {%>
-                        <%                    
-                            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-                            String fechaC = formatoFecha.format(pedi.getFecha());
-                            Usuario infoU = DB.infoUsuario(pedi.getUsuarios_idusuarios());
-                            String estado = "";
-                            if (pedi.isComprado()) {
-                                estado = "Tramitado";
-                            } else {
-                                estado = "Pendiente";
-                            }
-                        %>
-                       <tr>
-                            <th scope="row"><a class="text-info" href="desglose.jsp?idPedido=<%=pedi.getIdpedidos()%>"><%=pedi.getIdpedidos()%> - Desglose</a></th>
-                            <td class="align-middle"><%=df.format(pedi.getPrecio_total())%>€</td>
-                            <td class="align-middle"><%=fechaC%></td>                              
-                            <td class="align-middle"><%=infoU.getUsername()%></td>
-                            <td class="align-middle"><%=infoU.getEmail()%></td>
-                            <td class="align-middle"><%=estado%></td>
-                        </tr>
-                        <%}%>
-                        <%}%>
-                    </table>
-                    <!-- CARRITO -->
+                <div class="container-fluid mt-5">
+                   
+                   
                 </div>
                 <!-- CONTAINER LOGO + DINAMIC PAGE -->
             </div>

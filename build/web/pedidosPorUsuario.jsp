@@ -54,54 +54,69 @@
             <!-- Sidebar -->
             <div class="bg-white border-right" id="sidebar-wrapper">
                 <div class="sidebar-heading text-center">
-                    <img src="imagenes/admin.png" width="60px" alt="" srcset="" />
+                    <a href="vistaAdmin.jsp" >               
+                        <img src="imagenes/admin.png" width="60px" alt="" srcset="" />
+                    </a>
+
                 </div>
-                <div class="list-group list-group-flush">
+                <!-- acordeon -->
+                <div id="accordion" class="container-fluid">
+
+                    <h5 class="mb-0 text-center">
+
+                        <button class="btn btn-dark text-white collapsed " data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            Herramientas
+                        </button>
+                    </h5>
+                </div>
+                <!-- acordeon -->
+                <div id="collapseTwo" class="collapse show m-2" aria-labelledby="headingTwo" data-parent="#accordion">
                     <a
                         href="#"
-                        class="list-group-item list-group-item-action bg-white"
+                        class="list-group-item list-group-item-action bg-white herramientasLinks"
                         >#</a
                     >
                     <a
-                        href="vistaAdmin.jsp"
-                        class="list-group-item list-group-item-action bg-white"
+                        href="pedidosTramitados.jsp"
+                        class="list-group-item list-group-item-action bg-white herramientasLinks"
                         >Pedidos Tramitados</a
                     >
                     <a
                         href="topVentas.jsp"
-                        class="list-group-item list-group-item-action bg-white"
+                        class="list-group-item list-group-item-action bg-white herramientasLinks"
                         >Top ventas</a
                     >
                     <a
                         href="mejoresClientes.jsp"
-                        class="list-group-item list-group-item-action bg-white"
+                        class="list-group-item list-group-item-action bg-white herramientasLinks" 
                         >Mejores clientes</a
                     >
                     <a
                         href="pedidosPorFecha.jsp"
-                        class="list-group-item list-group-item-action bg-white"
+                        class="list-group-item list-group-item-action bg-white herramientasLinks"
                         >Ordenar por fecha</a
-                    >        
+                    >
                     <a
                         href="pedidosPorUsuario.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Ver pedidos de un usuario</a
-                    >   
+                        class="list-group-item list-group-item-action bg-dark herramientasLinks active"
+                        >Filtrar por usuario</a
+                    > 
                     <form class="form-group" action="ServletFiltroUsers" method="POST">
                         <label class="font-weight-bold">Username:</label><input class="form-control" type="text" name="username">
 
                         <input class="btn btn-outline-info" type="submit" value="Filtrar">
                     </form>
-                     <a
+                    <a
                         href="pedidosPorProducto.jsp"
-                        class="list-group-item list-group-item-action bg-white"
+                        class="list-group-item list-group-item-action bg-white herramientasLinks"
                         >Pedidos por producto</a
                     > 
-                    
+
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
-
+<!-- 
+-->
             <!-- Page Content -->
             <div id="page-content-wrapper">
                 <nav class="navbar navbar-expand-lg navbar-white bg-white ">

@@ -35,6 +35,7 @@
         HttpSession sesion = request.getSession();
         Usuario user = (Usuario) sesion.getAttribute("admin");
         RequestDispatcher rd;
+        try{
         if (user == null) {
             String faltaLog = "* No se ha iniciado sesión.";
             request.getServletContext().setAttribute("faltaLog", faltaLog);
@@ -43,6 +44,15 @@
             rd = request.getRequestDispatcher("indexError.jsp");
             rd.forward(request, response);
         }
+        }catch(Exception e){
+            String faltaLog = "* No se ha iniciado sesión.";
+            request.getServletContext().setAttribute("faltaLog", faltaLog);
+            String erroresEnLogin = "";
+            request.getServletContext().setAttribute("erroresEnLogin", erroresEnLogin);
+            rd = request.getRequestDispatcher("indexError.jsp");
+            rd.forward(request, response);
+        }
+        
 
         DecimalFormat df = new DecimalFormat("#.00");
         ArrayList<BestCliente> lista = DB.mejoresClientes();

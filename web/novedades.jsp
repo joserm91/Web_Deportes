@@ -170,7 +170,7 @@
                                     /></a>
                                 <p>Lo último</p>
                                 <p><%=info.getNombre_producto()%></p>
-                                <p>Precio: <%=info.getPrecio()%></p>
+                                <p>Precio: <%=info.getPrecio()%>€</p>
 
                                 <a href="ServletCarrito?idproducto=<%=info.getId_producto()%>&pathInfo=novedades.jsp" class="btn btn-primary btnAañadir"
                                    >Añadir a la cesta</a

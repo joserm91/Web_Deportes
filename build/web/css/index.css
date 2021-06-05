@@ -1,25 +1,94 @@
+
+
+
+
 .parah2 {
-  font-family: inherit;
-  font-weight: 800;
-  color: black;
-  opacity: 0.7;
-  margin-left: 100px;
+    font-family: inherit;
+    font-weight: 800;
+    color: black;
+    opacity: 0.7;
+    margin-left: 100px;
 }
 .justdoit {
-  margin-right: 150px;
+    margin-right: 150px;
 }
 .footerColor{
-  background-color: black;
+    background-color: black;
 }
 .acercaDe{
-  font-size: 15px;
+    font-size: 15px;
 }
 .producto:hover{
- 
-  
+
+
 }
 .producto{
-  margin: 7px;
-  padding: 5px;
+    margin: 7px;
+    padding: 5px;
+}
+.fotito{
+    cursor: pointer;
+    transition: box-shadow 0.2s ease;
+    transition: size 0.4s ease;
+    transition: transform .2s;
+
 }
 
+.fotito:hover{
+    box-shadow: 3px 3px 9px -1px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 3px 3px 9px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 3px 3px 9px -1px rgba(0,0,0,0.75);
+    transform: scale(1.05);
+
+}
+
+.fotitoCarrito{
+    cursor: pointer;
+    border-radius: 15px;
+    border:1px solid grey !important;
+    transition: box-shadow 0.2s ease;
+    transition: size 0.4s ease;
+    transition: transform .2s;
+
+}
+
+.fotitoCarrito:hover{
+    box-shadow: 3px 3px 9px -1px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 3px 3px 9px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 3px 3px 9px -1px rgba(0,0,0,0.75);
+    transform: scale(1.5);
+
+}
+.myCartTable{
+
+    box-shadow: 3px 3px 9px -1px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 3px 3px 9px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 3px 3px 9px -1px rgba(0,0,0,0.75);
+}
+.herramientasLinks{
+    transition-property: background-color;
+    transition-duration: 0.3s;
+}
+.herramientasLinks:hover{
+    background-color: #343a40 !important;
+    color:white !important;
+}
+
+a:active{
+    border:2px solid black;
+    color:black;
+}
+
+.descZapatilla{
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    border:0.5px solid whitesmoke;
+
+}
+
+#catFont{
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+}

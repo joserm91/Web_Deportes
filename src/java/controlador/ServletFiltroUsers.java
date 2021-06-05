@@ -31,12 +31,12 @@ public class ServletFiltroUsers extends HttpServlet {
         RequestDispatcher rd;
         String username = request.getParameter("username");
         ArrayList<Pedido> pedidosTramitadosUsiario = null;
+        
+        
+        
         if (username != null) {
 
             pedidosTramitadosUsiario = DB.pedidosTramitadosDeUnUsuario(username);
-            
-           
-            
             sesion.setAttribute("pedidosTramitadosUsiario", pedidosTramitadosUsiario);
             rd = request.getRequestDispatcher("pedidosPorUsuario.jsp");
             rd.forward(request, response);

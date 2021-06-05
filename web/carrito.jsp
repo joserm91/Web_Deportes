@@ -116,8 +116,9 @@
 
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                         <li class="nav-item">
-                            <p class="lead font-weight-bold text-center justify-content-center  p-1"><%=user.getUsername()%></p>
+                            <p class="btn btn-dark nav-link text-white text- lead mr-2"><%=user.getUsername()%></p>
                         </li>
+                        <!--lead font-weight-bold text-center justify-content-center  p-1-->
                         <li class="nav-item">
                             <a class="btn btn-dark nav-link text-white" href="logout"
                                >Cerrar Sesión</a
@@ -158,87 +159,89 @@
                     <div class="container-fluid mt-5">
                         <h4 class="my-3"><img class="img-fluid mr-5" src="imagenes/nike-3.svg" width="60px" >Tu carrito <img class="img-fluid" width="30px" src="imagenes/carrito.svg"></h4>
                         <!-- CARRITO -->
-                        <table class="table table-dark table-striped text-center">
-                            <thead>
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Total</th>
-                                    <th scope="col">Fecha trámite</th>
-                                    <th scope="col">Usuario</th>
-                                    <th scope="col">Estado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                    String categoria = "";
-                                    for (LineaDePedido lp : LP) {%>
+                        <div class="table-responsive myCartTable">
+                            <table class="table table-dark table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">Categoría</th>
+                                        <th scope="col">Precio</th>
+                                        <th scope="col">Unidades</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%
+                                        String categoria = "";
+                                        for (LineaDePedido lp : LP) {%>
 
-                                <%
-                                    Producto prod = DB.infoProductoPorId(lp.getProductos_idproductos());
-                                    contadorItems += lp.getCantidad();
-                                    total += lp.getCantidad() * prod.getPrecio();
-                                    int catego = prod.getCategoria();
-                                    switch (catego) {
-                                        case 1:
-                                            categoria = "niño";
-                                            break;
-                                        case 2:
-                                            categoria = "niña";
-                                            break;
-                                        case 3:
-                                            categoria = "hombre";
-                                            break;
-                                        case 4:
-                                            categoria = "mujer";
-                                            break;
-                                        case 5:
-                                            categoria = "novedades";
-                                            break;
-                                        default:
-                                            categoria = "0";
-                                            break;
+                                    <%
+                                        Producto prod = DB.infoProductoPorId(lp.getProductos_idproductos());
+                                        contadorItems += lp.getCantidad();
+                                        total += lp.getCantidad() * prod.getPrecio();
+                                        int catego = prod.getCategoria();
+                                        switch (catego) {
+                                            case 1:
+                                                categoria = "niño";
+                                                break;
+                                            case 2:
+                                                categoria = "niña";
+                                                break;
+                                            case 3:
+                                                categoria = "hombre";
+                                                break;
+                                            case 4:
+                                                categoria = "mujer";
+                                                break;
+                                            case 5:
+                                                categoria = "novedades";
+                                                break;
+                                            default:
+                                                categoria = "0";
+                                                break;
 
-                                    }
-                                %>
-                                <tr>
-                                    <th scope="row " ><img 
-                                            data-toggle="modal"
-                                            data-target="#exampleModal<%=prod.getId_producto()%>"
-                                            class="img-fluid rounded" width="100px" src="images_zapatillas/<%=categoria%>/<%=prod.getFoto()%>"></th>
-                                    <td class="align-middle"><%=prod.getNombre_producto()%></td>
-                                    <td class="align-middle"><%=categoria%></td>                              
-                                    <td class="align-middle"><%=prod.getPrecio()%>€/ud.</td>
-                                    <td class="align-middle"><%=lp.getCantidad()%></td>
-                                    <td class="align-middle"><a href="ServletLineaController?idProducto=<%=prod.getId_producto()%>&idPedido=<%=lp.getPedidos_idpedidos()%>&accion=sumar&cantidad=<%=lp.getCantidad()%>" style="width: 50px" class="btn btn-outline-info">+</a>
-                                        <a href="ServletLineaController?idProducto=<%=prod.getId_producto()%>&idPedido=<%=lp.getPedidos_idpedidos()%>&accion=restar&cantidad=<%=lp.getCantidad()%>" style="width: 50px" class="btn btn-outline-warning">-</a>
-                                        <a href="ServletLineaController?idProducto=<%=prod.getId_producto()%>&idPedido=<%=lp.getPedidos_idpedidos()%>&accion=eliminar&cantidad=<%=lp.getCantidad()%>" style="width: 100px" class="btn btn-outline-danger">Eliminar</a></td>
-                                </tr>
+                                        }
+                                    %>
+                                    <tr>
+                                        <th scope="row " ><img 
+                                                data-toggle="modal"
+                                                data-target="#exampleModal<%=prod.getId_producto()%>"
+                                                class="img-fluid rounded fotitoCarrito" width="100px" src="images_zapatillas/<%=categoria%>/<%=prod.getFoto()%>"></th>
+                                        <td class="align-middle "><%=prod.getNombre_producto()%></td>
+                                        <td class="align-middle text-capitalize"><%=categoria%></td>                              
+                                        <td class="align-middle"><%=prod.getPrecio()%>€/ud.</td>
+                                        <td class="align-middle"><%=lp.getCantidad()%></td>
+                                        <td class="align-middle"><a href="ServletLineaController?idProducto=<%=prod.getId_producto()%>&idPedido=<%=lp.getPedidos_idpedidos()%>&accion=sumar&cantidad=<%=lp.getCantidad()%>" style="width: 50px" class="btn btn-outline-info">+</a>
+                                            <a href="ServletLineaController?idProducto=<%=prod.getId_producto()%>&idPedido=<%=lp.getPedidos_idpedidos()%>&accion=restar&cantidad=<%=lp.getCantidad()%>" style="width: 50px" class="btn btn-outline-warning">-</a>
+                                            <a href="ServletLineaController?idProducto=<%=prod.getId_producto()%>&idPedido=<%=lp.getPedidos_idpedidos()%>&accion=eliminar&cantidad=<%=lp.getCantidad()%>" style="width: 100px" class="btn btn-outline-danger">Eliminar</a></td>
+                                    </tr>
 
+                                    <%}%>
+                                    <tr>
+                                        <th scope="row"></th>
+                                        <td></td>
+                                        <td></td>
+                                        <td>TOTAL</td>
+                                        <td>Total Unidades</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="align-middle" scope="row"></th>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="align-middle"><%if (contadorItems > 0) {%><%=df.format(total)%><%} else {%>0<%}%>€</td>
+                                        <td class="align-middle"><%=contadorItems%></td>
+                                        <td class="align-middle">
+                                            <%if (contadorItems > 0) {%>
+                                            <a href="ServletFinalizarPedido?idp=<%=idPedido%>&total=<%=total%>"  class="btn btn-outline-info">Finalizar pedido</a></td>
+                                            <%} else {%>
+                                <a href="novedades.jsp"  class="btn btn-outline-info">Seguir comprando</a></td>
                                 <%}%>
-                                <tr>
-                                    <th scope="row">#</th>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Precio total</td>
-                                    <td>Artículos</td>
-                                    <td></td>
                                 </tr>
-                                <tr>
-                                    <th class="align-middle" scope="row">#</th>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="align-middle"><%if (contadorItems > 0) {%><%=df.format(total)%><%} else {%>0<%}%>€</td>
-                                    <td class="align-middle"><%=contadorItems%></td>
-                                    <td class="align-middle">
-                                        <%if (contadorItems > 0) {%>
-                                        <a href="ServletFinalizarPedido?idp=<%=idPedido%>&total=<%=total%>"  class="btn btn-outline-info">Finalizar pedido</a></td>
-                                        <%} else {%>
-                            <a href="novedades.jsp"  class="btn btn-outline-info">Seguir comprando</a></td>
-                            <%}%>
-                            </tr>
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                         <!-- CARRITO -->
                     </div>
                 </div>

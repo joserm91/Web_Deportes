@@ -167,7 +167,7 @@
                                     data-toggle="modal"
                                     data-target="#exampleModal<%=info.getId_producto()%>"
                                     /></a>
-                                <p>Hombre</p>
+                                <p>Mujer</p>
                                 <p><%=info.getNombre_producto()%></p>
                                 <p>Precio: <%=info.getPrecio()%></p>
 
