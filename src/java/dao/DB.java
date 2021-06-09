@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.BestCliente;
 import modelo.LineaDePedido;
+import modelo.Lineal;
 import modelo.Pedido;
 import modelo.Producto;
 import modelo.ProductoEstrella;
@@ -68,11 +70,12 @@ public class DB {
                 int id = rs.getInt("idpedidos");
                 double precio_total = rs.getDouble("precio_total");
 
-                Date fecha = rs.getDate("fecha");
+                java.util.Date fecha = new Date(1);
+                Timestamp timestamp = rs.getTimestamp("fecha");
 
                 int idUser = rs.getInt("usuarios_idusuarios");
                 boolean comprado = true;
-                pedi = new Pedido(id, precio_total, fecha, idUser, comprado);
+                pedi = new Pedido(idUser, precio_total, timestamp, idProducto, comprado);
                 listaDePedidos.add(pedi);
             }
 
@@ -251,13 +254,6 @@ public class DB {
                 int categoria = numeroCategoria;
                 double precio = rs.getDouble("precio");
                 String foto = rs.getString("foto");
-                /*
-                 System.out.println(id_producto);
-                 System.out.println(nombre_producto);
-                 System.out.println(categoria);
-                 System.out.println(precio);
-                 System.out.println(foto);
-                 */
                 infoPro = new Producto(id_producto, nombre_producto, categoria, precio, foto);
                 listaProductos.add(infoPro);
             }
@@ -376,7 +372,7 @@ public class DB {
             while (rs.next()) {
                 int idpedido = rs.getInt("idpedidos");
                 double precio_total = rs.getDouble("precio_total");
-                Date fecha = rs.getDate("fecha");
+                Timestamp fecha = rs.getTimestamp("fecha");
                 int idUsuario = rs.getInt("usuarios_idusuarios");
                 int pendiente = rs.getInt("comprado");
                 boolean comprado = false;
@@ -572,7 +568,7 @@ public class DB {
                 int id = rs.getInt("idpedidos");
                 double precio_total = rs.getDouble("precio_total");
 
-                Date fecha = rs.getDate("fecha");
+                Timestamp fecha = rs.getTimestamp("fecha");
 
                 int idUser = rs.getInt("usuarios_idusuarios");
                 boolean comprado = true;
@@ -633,7 +629,7 @@ public class DB {
                 int id = rs.getInt("idpedidos");
                 double precio_total = rs.getDouble("precio_total");
 
-                Date fecha = rs.getDate("fecha");
+                Timestamp fecha = rs.getTimestamp("fecha");
 
                 int idUser = rs.getInt("usuarios_idusuarios");
                 boolean comprado = true;
@@ -738,7 +734,7 @@ public class DB {
                 int id2 = rs.getInt("idpedidos");
                 double precio_total = rs.getDouble("precio_total");
 
-                Date fecha = rs.getDate("fecha");
+                Timestamp fecha = rs.getTimestamp("fecha");
 
                 int idUser = rs.getInt("usuarios_idusuarios");
                 boolean comprado = true;
@@ -781,4 +777,63 @@ public class DB {
         }
         return listaDeProductos;
     }
+
+    public static ArrayList<ProductoEstrella> mejorVendidos() {
+        ProductoEstrella prod = null;
+        ArrayList<ProductoEstrella> listaMasVendidos = new ArrayList<ProductoEstrella>();
+
+        Connection cnn = null;
+        ArrayList<Producto> listaDeProductos = new ArrayList<Producto>();
+        try {
+            cnn = CrearConexion();
+
+            String sql = "SELECT productos.foto,productos.nombre_producto,categorias.nombre,productos.precio,linea_pedido.productos_idproductos,sum(cantidad) as vendidos FROM linea_pedido,productos,categorias WHERE productos.idproductos = linea_pedido.productos_idproductos and categorias.idcategorias = productos.categorias_idcategorias GROUP BY productos_idproductos order by vendidos DESC limit 5";
+            PreparedStatement pst = cnn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                int idproductos = rs.getInt("linea_pedido.productos_idproductos");
+                String nombre_producto = rs.getString("productos.nombre_producto");
+                double precio = rs.getDouble("productos.precio");
+                String categoriaString = rs.getString("categorias.nombre");
+                String foto = rs.getString("productos.foto");
+                int vendidos = rs.getInt("vendidos");
+                double total = precio * vendidos;
+                prod = new ProductoEstrella(vendidos, idproductos, categoriaString, nombre_producto, foto, precio, total);
+                listaMasVendidos.add(prod);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex + " PROBLEMAS EN --> infoProductoPorId()");
+        }
+
+        return listaMasVendidos;
+    }
+     public static ArrayList<Lineal> graficaLineal() {
+        Lineal li = null;
+        ArrayList<Lineal> listaLineal = new ArrayList<Lineal>();
+
+        Connection cnn = null;
+       
+        try {
+            cnn = CrearConexion();
+
+            String sql = "SELECT sum(comprado) as vendido,month(fecha) as mes FROM `pedidos` where comprado = 1 group by month(fecha)";
+            PreparedStatement pst = cnn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+               int cantidad = rs.getInt("vendido");
+               int mes = rs.getInt("mes");
+               li =new Lineal(cantidad, mes);
+                listaLineal.add(li);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex + " PROBLEMAS EN --> infoProductoPorId()");
+        }
+
+        return listaLineal;
+    }
+    
 }

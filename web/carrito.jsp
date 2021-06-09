@@ -18,15 +18,114 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
 
-        <title>Carro</title>
-
+        
+        
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@1,700&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/79a941ea93.js" crossorigin="anonymous"></script>
+        
         <!-- Custom styles for this template -->
         <link href="css/simple-sidebar.css" rel="stylesheet" />
         <link rel="stylesheet" href="css/index.css" />
+        <link rel="stylesheet" href="css/cssGeneral.css" />
+        
+        <!-- modal confirmacion -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        
+        <title>Tu carrito</title>
+        <link rel="shortcut icon" href="imagenes/carro.png" type="image/x-icon">
     </head>
+    <style>
+        .modal-confirm {		
+            color: #434e65;
+            width: 525px;
+        }
+        .modal-confirm .modal-content {
+            padding: 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+        }
+        .modal-confirm .modal-header {
+            background: #47c9a2;
+            border-bottom: none;   
+            position: relative;
+            text-align: center;
+            margin: -20px -20px 0;
+            border-radius: 5px 5px 0 0;
+            padding: 35px;
+        }
+        .modal-confirm h4 {
+            text-align: center;
+            font-size: 36px;
+            margin: 10px 0;
+        }
+        .modal-confirm .form-control, .modal-confirm .btn {
+            min-height: 40px;
+            border-radius: 3px; 
+        }
+        .modal-confirm .close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #fff;
+            text-shadow: none;
+            opacity: 0.5;
+        }
+        .modal-confirm .close:hover {
+            opacity: 0.8;
+        }
+        .modal-confirm .icon-box {
+            color: #fff;		
+            width: 95px;
+            height: 95px;
+            display: inline-block;
+            border-radius: 50%;
+            z-index: 9;
+            border: 5px solid #fff;
+            padding: 15px;
+            text-align: center;
+        }
+        .modal-confirm .icon-box i {
+            font-size: 64px;
+            margin: -4px 0 0 -4px;
+        }
+        .modal-confirm.modal-dialog {
+            margin-top: 80px;
+        }
+        .modal-confirm .btn, .modal-confirm .btn:active {
+            color: #fff;
+            border-radius: 4px;
+            background: #eeb711 !important;
+            text-decoration: none;
+            transition: all 0.4s;
+            line-height: normal;
+            border-radius: 30px;
+            margin-top: 10px;
+            padding: 6px 20px;
+            border: none;
+        }
+        .modal-confirm .btn:hover, .modal-confirm .btn:focus {
+            background: #eda645 !important;
+            outline: none;
+        }
+        .modal-confirm .btn span {
+            margin: 1px 3px 0;
+            float: left;
+        }
+        .modal-confirm .btn i {
+            margin-left: 1px;
+            font-size: 20px;
+            float: right;
+        }
+        .trigger-btn {
+            display: inline-block;
+            margin: 100px auto;
+        }
+    </style>
     <%
         HttpSession sesion = request.getSession();
         Usuario user = (Usuario) sesion.getAttribute("usuario");
@@ -98,8 +197,8 @@
             <!-- Page Content -->
             <div id="page-content-wrapper">
                 <nav class="navbar navbar-expand-lg navbar-white bg-white ">
-                    <a href class="lead text-dark font-weight-bold" id="menu-toggle"
-                       >Categorías</a
+                    <a href class="lead text-dark " id="menu-toggle"
+                       ><i class="fas fa-bars fa-1x"></i></a
                     >
 
                     <button
@@ -116,13 +215,15 @@
 
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                         <li class="nav-item">
-                            <p class="btn btn-dark nav-link text-white text- lead mr-2"><%=user.getUsername()%></p>
+                            <p class="lead font-weight-bold text-center justify-content-center  p-1"><%=user.getUsername()%></p>
                         </li>
                         <!--lead font-weight-bold text-center justify-content-center  p-1-->
                         <li class="nav-item">
-                            <a class="btn btn-dark nav-link text-white" href="logout"
-                               >Cerrar Sesión</a
-                            >
+
+                            <a href="logout" id="btnCerrar" data-toggle="modal" data-target="#modalLogout">
+                                <!-- cerrar sesion -->
+                                <i class="fas fa-power-off fa-2x btnOff mt-2"></i>
+                            </a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link text-dark" href="carrito.jsp"
@@ -209,7 +310,7 @@
                                                 class="img-fluid rounded fotitoCarrito" width="100px" src="images_zapatillas/<%=categoria%>/<%=prod.getFoto()%>"></th>
                                         <td class="align-middle "><%=prod.getNombre_producto()%></td>
                                         <td class="align-middle text-capitalize"><%=categoria%></td>                              
-                                        <td class="align-middle"><%=prod.getPrecio()%>€/ud.</td>
+                                        <td class="align-middle"><%=prod.getPrecio()%>€</td>
                                         <td class="align-middle"><%=lp.getCantidad()%></td>
                                         <td class="align-middle"><a href="ServletLineaController?idProducto=<%=prod.getId_producto()%>&idPedido=<%=lp.getPedidos_idpedidos()%>&accion=sumar&cantidad=<%=lp.getCantidad()%>" style="width: 50px" class="btn btn-outline-info">+</a>
                                             <a href="ServletLineaController?idProducto=<%=prod.getId_producto()%>&idPedido=<%=lp.getPedidos_idpedidos()%>&accion=restar&cantidad=<%=lp.getCantidad()%>" style="width: 50px" class="btn btn-outline-warning">-</a>
@@ -233,11 +334,12 @@
                                         <td class="align-middle"><%=contadorItems%></td>
                                         <td class="align-middle">
                                             <%if (contadorItems > 0) {%>
-                                            <a href="ServletFinalizarPedido?idp=<%=idPedido%>&total=<%=total%>"  class="btn btn-outline-info">Finalizar pedido</a></td>
+                                            <a  class="btn btn-outline-info launch-modal" >Finalizar pedido</a>
+
                                             <%} else {%>
-                                <a href="novedades.jsp"  class="btn btn-outline-info">Seguir comprando</a></td>
-                                <%}%>
-                                </tr>
+                                            <a href="novedades.jsp"  class="btn btn-outline-info">Seguir comprando</a></td>
+                                            <%}%>
+                                    </tr>
 
                                 </tbody>
                             </table>
@@ -245,6 +347,7 @@
                         <!-- CARRITO -->
                     </div>
                 </div>
+                <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-arrow-up fa-2x"></i></button>
                 <!-- CONTAINER LOGO + DINAMIC PAGE -->
             </div>
             <!-- /#page-content-wrapper -->
@@ -406,16 +509,92 @@
         <%}%>
 
         <!-- MODAL -->
+        <!-- Modal confirm -->
+        <div class="modal fade" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="modalLogout" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header  w-100">
+                        <h5 class="modal-title w-100 font-weight-bold text-danger"><p class="w-100 text-center">Aviso</p></h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center">¿Seguro que desea cerrar sesión?</p>
+                    </div>
+                    <div class="modal-footer ">
+                        <a href="logout"   class="btn btn-white text-dark">Si</a>
+                        <button type="button" class="btn btn-dark text-white" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal confirm -->
+
+        <!-- Modal mySuccessModal -->
+        <div id="mySuccessModal" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center">
+                        <div class="icon-box">
+                            <i class="material-icons">&#xE876;</i>
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <h4>Confirmación</h4>	
+
+                        <a class="btn btn-success" onclick="pedidoFinalizadoAlert()" data-dismiss="modal" ><span>Realizar pedido</span> <i class="material-icons">&#xE5C8;</i></a>
+                    </div>
+                </div>
+            </div>
+        </div>     
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
         <!-- Menu Toggle Script -->
         <script>
-            $("#menu-toggle").click(function (e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
-            });
+                            $("#menu-toggle").click(function (e) {
+                                e.preventDefault();
+                                $("#wrapper").toggleClass("toggled");
+                            });
+                            //SCROLL UP
+                            //Get the button:
+                            mybutton = document.getElementById("myBtn");
+
+                            // When the user scrolls down 20px from the top of the document, show the button
+                            window.onscroll = function () {
+                                scrollFunction()
+                            };
+
+                            function scrollFunction() {
+                                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                                    mybutton.style.display = "block";
+                                } else {
+                                    mybutton.style.display = "none";
+                                }
+                            }
+
+                            // When the user clicks on the button, scroll to the top of the document
+                            function topFunction() {
+                                document.body.scrollTop = 0; // For Safari
+                                document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+                            }
+
+                            //Muestra modal de success compra
+                            function pedidoFinalizadoAlert() {
+                                window.location = "ServletFinalizarPedido?idp=<%=idPedido%>&total=<%=total%>";
+                            }
+
+
+                            $(document).ready(function () {
+                                $('.launch-modal').click(function () {
+                                    $('#mySuccessModal').modal({
+                                        backdrop: 'static'
+                                    });
+                                });
+                            });
         </script>
     </body>
 </html>

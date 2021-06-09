@@ -21,14 +21,24 @@
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@1,700&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/79a941ea93.js" crossorigin="anonymous"></script>
         <!-- Custom styles for this template -->
         <link href="css/simple-sidebar.css" rel="stylesheet" />
         <link rel="stylesheet" href="css/index.css" />
+        <link rel="stylesheet" href="css/cssGeneral.css" />
+        <link rel="shortcut icon" href="imagenes/LogoProductoNike.png" type="image/x-icon" sizes="32x32">
     </head>
+
+    <style>
+       
+    </style>
     <%
         HttpSession sesion = request.getSession();
         Usuario user = (Usuario) sesion.getAttribute("usuario");
+        String repo = sesion.getAttribute("reproducciones").toString();
+
         RequestDispatcher rd;
         if (user == null) {
             String faltaLog = "* No se ha iniciado sesión.";
@@ -38,24 +48,32 @@
             rd = request.getRequestDispatcher("indexError.jsp");
             rd.forward(request, response);
         }
+
         ArrayList<Producto> cesta = (ArrayList<Producto>) sesion.getAttribute("cesta");
         ArrayList<Producto> lista = DB.infoProductosPorCategoria(5);
-         Pedido infoPedido = (Pedido) sesion.getAttribute("pedido");
-        int idPedido = infoPedido.getIdpedidos();
-       
+        Pedido infoPedido = (Pedido) sesion.getAttribute("pedido");
+        int idPedido = 0;
+        if (infoPedido != null) {
+            idPedido = infoPedido.getIdpedidos();
+        } else {
+            idPedido = 1;
+        }
+
         cesta = DB.currentCesta(infoPedido.getIdpedidos());
         ArrayList<LineaDePedido> LP = DB.infoLP(idPedido);
         int objetos = 0;
         if (LP != null) {
 
             for (LineaDePedido lp : LP) {
-                System.out.print(lp.getId_lineadepedido() + "<-------");
+
                 objetos += lp.getCantidad();
             }
         }
-        
+
     %>
     <body>
+
+
         <div class="d-flex" id="wrapper">
             <!-- Sidebar -->
             <div class="bg-white border-right" id="sidebar-wrapper">
@@ -94,9 +112,10 @@
 
             <!-- Page Content -->
             <div id="page-content-wrapper">
-                <nav class="navbar navbar-expand-lg navbar-white bg-white ">
-                    <a href class="lead text-dark font-weight-bold" id="menu-toggle"
-                       >Categorías</a
+
+                <nav class="navbar navbar-expand-lg navbar-white bg-white position-sticky" id="myNav">
+                    <a href class="lead text-dark " id="menu-toggle"
+                       ><i class="fas fa-bars fa-1x"></i></a
                     >
 
                     <button
@@ -113,12 +132,14 @@
 
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                         <li class="nav-item">
-                            <p class="lead font-weight-bold text-center justify-content-center  p-1"><%=user.getUsername()%></p>
+                            <p class="lead font-weight-bold text-center justify-content-center mt-2"><%=user.getUsername()%></p>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-dark nav-link text-white" href="logout"
-                               >Cerrar Sesión</a
-                            >
+
+                            <a href="logout" id="btnCerrar" data-toggle="modal" data-target="#modalLogout">
+                                <!-- cerrar sesion -->
+                                <i class="fas fa-power-off fa-2x btnOff mt-2"></i>
+                            </a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link text-dark" href="carrito.jsp"
@@ -142,7 +163,20 @@
                 </nav>
                 <!-- CONTAINER LOG + DINAMIC PAGE -->
                 <div class="container-fluid">
+                    <%
+
+                        if (repo.equals("0")) {%>
+
+                    <div class="container-fluid">
+                        <video autoplay="autoplay"  id="video_background" preload="auto" volume="25">
+                            <source src="videos/NIKE LOGO ANIMATION.mp4" type="video/mp4" />
+                            <video/>
+                    </div>
+
+                    <% sesion.setAttribute("reproducciones", "1");
+                        }%>
                     <h1 class="my-4">
+
                         <img
                             class="justdoit"
                             src="imagenes/nike_just_do_it_logo.jpg"
@@ -152,8 +186,8 @@
                     </h1>
                     <h2 class="display-3 parah2 mt-5">EQUÍPATE</h2>
 
-                    <div class="container-fluid mt-5">
-                        <h4>Novedades</h4>
+                    <div class="container-fluid mt-5 ">
+                        <h2 id="catFont">Novedades</h2>
                         <div class="row">
 
                             <%for (Producto info : lista) {%>
@@ -168,13 +202,14 @@
                                     data-toggle="modal"
                                     data-target="#exampleModal<%=info.getId_producto()%>"
                                     /></a>
-                                <p>Lo último</p>
-                                <p><%=info.getNombre_producto()%></p>
-                                <p>Precio: <%=info.getPrecio()%>€</p>
+                                <div class="descZapatilla">
+                                    <h5><%=info.getNombre_producto()%></h5>
+                                    <p class="price text-success"><%=info.getPrecio()%>€</p>
 
-                                <a href="ServletCarrito?idproducto=<%=info.getId_producto()%>&pathInfo=novedades.jsp" class="btn btn-primary btnAañadir"
-                                   >Añadir a la cesta</a
-                                >
+                                    <a href="ServletCarrito?idproducto=<%=info.getId_producto()%>&pathInfo=novedades.jsp" class="btn btn-outline-dark btnAañadir"
+                                       ><i class="fas fa-shopping-cart"></i> Añadir a la cesta </a
+                                    > 
+                                </div>
                             </div>
 
                             <%}%>
@@ -184,9 +219,11 @@
                         </div>
                     </div>
                 </div>
+                <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-arrow-up fa-2x"></i></button>
                 <!-- CONTAINER LOGO + DINAMIC PAGE -->
             </div>
             <!-- /#page-content-wrapper -->
+
         </div>
         <!-- /#wrapper -->
         <!-- FOOTER -->
@@ -318,16 +355,76 @@
         <%}%>
 
         <!-- MODAL -->
+        <!-- Modal confirm -->
+        <div class="modal fade" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="modalLogout" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header  w-100">
+                        <h5 class="modal-title w-100 font-weight-bold text-danger"><p class="w-100 text-center">Aviso</p></h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center">¿Está seguro que quiera cerrar sesión?</p>
+                    </div>
+                    <div class="modal-footer ">
+                        <a href="logout"   class="btn btn-white text-dark">Si</a>
+                        <button type="button" class="btn btn-dark text-white" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal confirm -->
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
         <!-- Menu Toggle Script -->
         <script>
-            $("#menu-toggle").click(function (e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
-            });
+let myNav = document.getElementById("myNav");
+
+let videoInicio = document.getElementById("video_background");
+                    if (videoInicio != undefined) {
+                      $("#myNav").hide();
+                        setTimeout(function () {
+                            
+                            $("#video_background").hide();
+                            $("#wrapper").toggleClass("toggled");
+                           $("#myNav").show();
+                        }, 4000)
+
+                        $("#wrapper").toggleClass("toggled");
+
+                    }
+
+                    $("#menu-toggle").click(function (e) {
+                        e.preventDefault();
+                        $("#wrapper").toggleClass("toggled");
+                    });
+
+                    //SCROLL UP
+                    //Get the button:
+                    mybutton = document.getElementById("myBtn");
+
+                    // When the user scrolls down 20px from the top of the document, show the button
+                    window.onscroll = function () {
+                        scrollFunction()
+                    };
+
+                    function scrollFunction() {
+                        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                            mybutton.style.display = "block";
+                        } else {
+                            mybutton.style.display = "none";
+                        }
+                    }
+
+// When the user clicks on the button, scroll to the top of the document
+                    function topFunction() {
+                        document.body.scrollTop = 0; // For Safari
+                        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+                    }
         </script>
     </body>
 </html>

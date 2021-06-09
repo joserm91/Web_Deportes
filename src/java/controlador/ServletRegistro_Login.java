@@ -55,6 +55,7 @@ public class ServletRegistro_Login extends HttpServlet {
                 } else if (rol.equals("usuario")) {
                     //GO TO USER HTML
                     sesion.setAttribute("usuario", user);
+                     sesion.setAttribute("reproducciones", "0");
                     Pedido pedido = DB.TienePedidoSinPagar(user);
 
                     if (pedido != null) {

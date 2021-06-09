@@ -6,6 +6,7 @@
 package modelo;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -14,11 +15,11 @@ import java.sql.Date;
 public class Pedido {
     private int idpedidos;
     private double precio_total;
-    private Date fecha;
+    private Timestamp fecha;
     private int usuarios_idusuarios;
     private boolean comprado;
 
-    public Pedido(int idpedidos, double precio_total, Date fecha, int usuarios_idusuarios, boolean comprado) {
+    public Pedido(int idpedidos, double precio_total, Timestamp fecha, int usuarios_idusuarios, boolean comprado) {
         this.idpedidos = idpedidos;
         this.precio_total = precio_total;
         this.fecha = fecha;
@@ -42,12 +43,12 @@ public class Pedido {
         this.precio_total = precio_total;
     }
 
-    public Date getFecha() {
+    public Timestamp getFecha() {
         
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
 

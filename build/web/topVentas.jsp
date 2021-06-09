@@ -25,10 +25,13 @@
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@1,700&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/79a941ea93.js" crossorigin="anonymous"></script>
         <!-- Custom styles for this template -->
         <link href="css/simple-sidebar.css" rel="stylesheet" />
         <link rel="stylesheet" href="css/index.css" />
+        <link rel="stylesheet" href="css/cssGeneral.css" />
     </head>
     <%
         HttpSession sesion = request.getSession();
@@ -43,7 +46,7 @@
             rd.forward(request, response);
         }
         ProductoEstrella top = DB.topVentas();
-DecimalFormat df = new DecimalFormat("#.00");
+        DecimalFormat df = new DecimalFormat("#.00");
 
     %>
     <body>
@@ -54,7 +57,7 @@ DecimalFormat df = new DecimalFormat("#.00");
                     <img src="imagenes/admin.png" width="60px" alt="" srcset="" />
                 </div>
                 <div class="list-group list-group-flush">
-                     <a
+                    <a
                         href="#"
                         class="list-group-item list-group-item-action bg-white"
                         >#</a
@@ -79,12 +82,12 @@ DecimalFormat df = new DecimalFormat("#.00");
                         class="list-group-item list-group-item-action bg-white"
                         >Ordenar por fecha</a
                     > 
-                     <a
+                    <a
                         href="pedidosPorProducto.jsp"
                         class="list-group-item list-group-item-action bg-white"
                         >Pedidos por producto</a
                     > 
-                   
+
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -113,9 +116,11 @@ DecimalFormat df = new DecimalFormat("#.00");
                             <p class="lead font-weight-bold text-center justify-content-center  p-1"><%=user.getUsername()%></p>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-dark nav-link text-white mr-2" href="logout"
-                               >Cerrar Sesión</a
-                            >
+
+                            <a href="logout" id="btnCerrar" data-toggle="modal" data-target="#modalLogout">
+                                <!-- cerrar sesion -->
+                                <i class="fas fa-power-off fa-2x btnOff mt-2"></i>
+                            </a>
                         </li>
 
                         <li>
@@ -132,53 +137,53 @@ DecimalFormat df = new DecimalFormat("#.00");
                             <tr>
                                 <th scope="col">ID del producto</th>
                                 <th scope="col">Nombre</th>
-                                  <th scope="col">Foto</th>
+                                <th scope="col">Foto</th>
                                 <th scope="col">Precio</th>
                                 <th scope="col">Ventas realizadas</th>
                                 <th scope="col">Total ganacias</th>                              
                             </tr>
                         </thead>
-                       
+
                         <%if (top != null) {%>
                         <%
-                            String categoria ="";
-                        int catego = top.getCategoria();
-                                    switch (catego) {
-                                        case 1:
-                                            categoria = "niño";
-                                            break;
-                                        case 2:
-                                            categoria = "niña";
-                                            break;
-                                        case 3:
-                                            categoria = "hombre";
-                                            break;
-                                        case 4:
-                                            categoria = "mujer";
-                                            break;
-                                        case 5:
-                                            categoria = "novedades";
-                                            break;
-                                        default:
-                                            categoria = "0";
-                                            break;
+                            String categoria = "";
+                            int catego = top.getCategoria();
+                            switch (catego) {
+                                case 1:
+                                    categoria = "niño";
+                                    break;
+                                case 2:
+                                    categoria = "niña";
+                                    break;
+                                case 3:
+                                    categoria = "hombre";
+                                    break;
+                                case 4:
+                                    categoria = "mujer";
+                                    break;
+                                case 5:
+                                    categoria = "novedades";
+                                    break;
+                                default:
+                                    categoria = "0";
+                                    break;
 
-                                    }
-                       %>
-                       <tr>
+                            }
+                        %>
+                        <tr>
                             <th scope="row" class="align-middle"><%=top.getIdproducto()%></th>
                             <td class="align-middle"><%=top.getNombre_producto()%></td>
                             <td class="align-middle"><img 
-                                            data-toggle="modal"
-                                            data-target="#exampleModal<%=top.getIdproducto()%>"
-                                            class="img-fluid rounded" width="100px" src="images_zapatillas/<%=categoria%>/<%=top.getFoto()%>"></td>
+                                    data-toggle="modal"
+                                    data-target="#exampleModal<%=top.getIdproducto()%>"
+                                    class="img-fluid rounded" width="100px" src="images_zapatillas/<%=categoria%>/<%=top.getFoto()%>"></td>
                             <td class="align-middle"><%=top.getPrecio()%>€/ud.</td>                              
                             <td class="align-middle"><%=top.getVendidas()%></td>
                             <td class="align-middle"><%=df.format(top.getTotal_ganancias())%>€</td>
-                            
+
                         </tr>
                         <%}%>
-                       
+
                     </table>
                     <!-- CARRITO -->
                 </div>
@@ -275,9 +280,9 @@ DecimalFormat df = new DecimalFormat("#.00");
             <!-- Copyright -->
         </footer>
         <!-- FOOTER -->
-  <!-- MODAL -->
+        <!-- MODAL -->
 
-       
+
 
         <div
             class="modal fade"
@@ -304,7 +309,7 @@ DecimalFormat df = new DecimalFormat("#.00");
                         <img
                             class="img-fluid w-100"
                             <%
-                            String categoria="";
+                                String categoria = "";
                                 int catego = top.getCategoria();
                                 switch (catego) {
                                     case 1:
@@ -340,9 +345,30 @@ DecimalFormat df = new DecimalFormat("#.00");
             </div>
         </div>
 
-        
+
 
         <!-- MODAL -->
+         <!-- Modal confirm -->
+        <div class="modal fade" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="modalLogout" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header  w-100">
+                        <h5 class="modal-title w-100 font-weight-bold text-danger"><p class="w-100 text-center">Aviso</p></h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center">¿Está seguro que quiera cerrar sesión?</p>
+                    </div>
+                    <div class="modal-footer ">
+                        <a href="logout"   class="btn btn-white text-dark">Si</a>
+                        <button type="button" class="btn btn-dark text-white" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal confirm -->
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

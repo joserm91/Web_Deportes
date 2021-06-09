@@ -24,10 +24,14 @@
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@1,700&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/79a941ea93.js" crossorigin="anonymous"></script>
         <!-- Custom styles for this template -->
         <link href="css/simple-sidebar.css" rel="stylesheet" />
         <link rel="stylesheet" href="css/index.css" />
+        <link rel="stylesheet" href="css/cssGeneral.css" />
+        <link rel="shortcut icon" href="imagenes/admin.png" type="image/x-icon">
     </head>
     <%
         HttpSession sesion = request.getSession();
@@ -41,7 +45,7 @@
             rd = request.getRequestDispatcher("indexError.jsp");
             rd.forward(request, response);
         }
-        ArrayList<Pedido> listaDePedidos = (ArrayList<Pedido>)sesion.getAttribute("listaPorFechas");
+        ArrayList<Pedido> listaDePedidos = (ArrayList<Pedido>) sesion.getAttribute("listaPorFechas");
         DecimalFormat df = new DecimalFormat("#.00");
 
     %>
@@ -53,11 +57,7 @@
                     <img src="imagenes/admin.png" width="60px" alt="" srcset="" />
                 </div>
                 <div class="list-group list-group-flush">
-                     <a
-                        href="#"
-                        class="list-group-item list-group-item-action bg-white"
-                        >#</a
-                    >
+
                     <a
                         href="vistaAdmin.jsp"
                         class="list-group-item list-group-item-action bg-white"
@@ -83,12 +83,12 @@
                         <label class="font-weight-bold">Hasta</label><input class="form-control" type="date" name="fecha2">
                         <input class="btn btn-outline-info" type="submit" value="Filtrar">
                     </form>
-                     <a
+                    <a
                         href="pedidosPorUsuario.jsp"
                         class="list-group-item list-group-item-action bg-white"
                         >Ver pedidos de un usuario</a
                     >
-                     <a
+                    <a
                         href="pedidosPorProducto.jsp"
                         class="list-group-item list-group-item-action bg-white"
                         >Pedidos por producto</a
@@ -121,9 +121,11 @@
                             <p class="lead font-weight-bold text-center justify-content-center  p-1"><%=user.getUsername()%></p>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-dark nav-link text-white mr-2" href="logout"
-                               >Cerrar Sesión</a
-                            >
+
+                            <a href="logout" id="btnCerrar" data-toggle="modal" data-target="#modalLogout">
+                                <!-- cerrar sesion -->
+                                <i class="fas fa-power-off fa-2x btnOff mt-2"></i>
+                            </a>
                         </li>
 
                         <li>
@@ -150,8 +152,13 @@
                         <%if (listaDePedidos != null) {%>
                         <%for (Pedido pedi : listaDePedidos) {%>
                         <%
-                            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-                            String fechaC = formatoFecha.format(pedi.getFecha());
+                            String fechaC = pedi.getFecha().toString();
+                            System.out.print(fechaC);
+                            if (fechaC != null && fechaC != "") {
+                                fechaC = fechaC.substring(0, fechaC.length() - 2);
+                                fechaC = fechaC.replace(" ", " -- ");
+                            }
+
                             Usuario infoU = DB.infoUsuario(pedi.getUsuarios_idusuarios());
                             String estado = "";
                             if (pedi.isComprado()) {
@@ -169,10 +176,10 @@
                             <td class="align-middle"><%=estado%></td>
                         </tr>
                         <%}%>
-                        <%}else{%>
+                        <%} else {%>
                         <tr>Introduzca el intervalo de fechas.</tr>
-                        
-                        
+
+
                         <%}%>
                     </table>
                     <!-- CARRITO -->
@@ -270,7 +277,27 @@
             <!-- Copyright -->
         </footer>
         <!-- FOOTER -->
-
+ <!-- Modal confirm -->
+        <div class="modal fade" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="modalLogout" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header  w-100">
+                        <h5 class="modal-title w-100 font-weight-bold text-danger"><p class="w-100 text-center">Aviso</p></h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center">¿Está seguro que quiera cerrar sesión?</p>
+                    </div>
+                    <div class="modal-footer ">
+                        <a href="logout"   class="btn btn-white text-dark">Si</a>
+                        <button type="button" class="btn btn-dark text-white" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal confirm -->
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

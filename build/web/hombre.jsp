@@ -27,6 +27,8 @@
         <!-- Custom styles for this template -->
         <link href="css/simple-sidebar.css" rel="stylesheet" />
         <link rel="stylesheet" href="css/index.css" />
+        <link rel="stylesheet" href="css/cssGeneral.css" />
+          <link rel="shortcut icon" href="imagenes/LogoProductoNike.png" type="image/x-icon" sizes="32x32">
     </head>
     <%
         HttpSession sesion = request.getSession();
@@ -96,8 +98,8 @@
             <!-- Page Content -->
             <div id="page-content-wrapper">
                 <nav class="navbar navbar-expand-lg navbar-white bg-white ">
-                    <a href class="lead text-dark font-weight-bold" id="menu-toggle"
-                       >Categorías</a
+                    <a href class="lead text-dark " id="menu-toggle"
+                       ><i class="fas fa-bars fa-1x"></i></a
                     >
 
                     <button
@@ -117,9 +119,11 @@
                             <p class="lead font-weight-bold text-center justify-content-center  p-1"><%=user.getUsername()%></p>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-dark nav-link text-white" href="logout"
-                               >Cerrar Sesión</a
-                            >
+
+                            <a href="logout" id="btnCerrar" data-toggle="modal" data-target="#modalLogout">
+                                <!-- cerrar sesion -->
+                                <i class="fas fa-power-off fa-2x btnOff mt-2"></i>
+                            </a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link text-dark" href="carrito.jsp"
@@ -187,6 +191,7 @@
                         </div>
                     </div>
                 </div>
+                <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-arrow-up fa-2x"></i></button>
                 <!-- CONTAINER LOGO + DINAMIC PAGE -->
             </div>
             <!-- /#page-content-wrapper -->
@@ -321,16 +326,60 @@
         <%}%>
 
         <!-- MODAL -->
+        <!-- Modal confirm -->
+        <div class="modal fade" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="modalLogout" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header  w-100">
+                        <h5 class="modal-title w-100 font-weight-bold text-danger"><p class="w-100 text-center">Aviso</p></h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center">¿Está seguro que quiera cerrar sesión?</p>
+                    </div>
+                    <div class="modal-footer ">
+                        <a href="logout"   class="btn btn-white text-dark">Si</a>
+                        <button type="button" class="btn btn-dark text-white" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal confirm -->
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
         <!-- Menu Toggle Script -->
         <script>
-            $("#menu-toggle").click(function (e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
-            });
+                    $("#menu-toggle").click(function (e) {
+                        e.preventDefault();
+                        $("#wrapper").toggleClass("toggled");
+                    });
+
+                    //SCROLL UP
+                    //Get the button:
+                    mybutton = document.getElementById("myBtn");
+
+                    // When the user scrolls down 20px from the top of the document, show the button
+                    window.onscroll = function () {
+                        scrollFunction()
+                    };
+
+                    function scrollFunction() {
+                        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                            mybutton.style.display = "block";
+                        } else {
+                            mybutton.style.display = "none";
+                        }
+                    }
+
+// When the user clicks on the button, scroll to the top of the document
+                    function topFunction() {
+                        document.body.scrollTop = 0; // For Safari
+                        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+                    }
         </script>
     </body>
 </html>

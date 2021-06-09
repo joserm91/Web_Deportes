@@ -19,14 +19,18 @@
         <meta name="description" content="" />
         <meta name="author" content="" >
 
-        <title>Desglose pedido</title>
+        <title>Información pedido</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-
+ <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@1,700&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/79a941ea93.js" crossorigin="anonymous"></script>
         <!-- Custom styles for this template -->
         <link href="css/simple-sidebar.css" rel="stylesheet"/>
         <link rel="stylesheet" href="css/index.css" />
+        <link rel="stylesheet" href="css/cssGeneral.css" />
+        <link rel="shortcut icon" href="imagenes/admin.png" type="image/x-icon">
     </head>
     <%
         HttpSession sesion = request.getSession();
@@ -41,6 +45,9 @@
             rd.forward(request, response);
         }
         int idPedido = Integer.parseInt(request.getParameter("idPedido"));
+        String userName = (request.getParameter("userName"));
+        String userEmail = (request.getParameter("userEmail"));
+        String fechaC = (request.getParameter("fechaC"));
         ArrayList<LineaDePedido> desglose = DB.infoLP(idPedido);
         int objetos = 0;
         int contadorItems = 0;
@@ -64,11 +71,7 @@
                     <img src="imagenes/admin.png" width="60px" alt="" srcset="" />
                 </div>
                 <div class="list-group list-group-flush">
-                    <a
-                        href="#"
-                        class="list-group-item list-group-item-action bg-white"
-                        >#</a
-                    >
+                   
                     <a
                         href="vistaAdmin.jsp"
                         class="list-group-item list-group-item-action bg-white"
@@ -127,10 +130,12 @@
                         <li class="nav-item">
                             <p class="lead font-weight-bold text-center justify-content-center  p-1"><%=user.getUsername()%></p>
                         </li>
-                        <li class="nav-item">
-                            <a class="btn btn-dark nav-link text-white mr-2" href="logout"
-                               >Cerrar Sesión</a
-                            >
+                       <li class="nav-item">
+
+                            <a href="logout" id="btnCerrar" data-toggle="modal" data-target="#modalLogout">
+                                <!-- cerrar sesion -->
+                                <i class="fas fa-power-off fa-2x btnOff mt-2"></i>
+                            </a>
                         </li>
 
                         <li>
@@ -139,8 +144,24 @@
                     </ul>
                 </nav>
                 <!-- CONTAINER LOG + DINAMIC PAGE -->
-                <div class="container-fluid">
-                    <h1 class="font-weight-bold">Desglose</h1>
+                <div class="container-fluid mt-5">
+                    <table class="text-center bg-dark text-white" border="1">
+                        <h3>Nº Pedido: <%=idPedido%></h3>
+                        <thead>
+                        <th class="align-middle p-1">Usuario</th>
+                        <th class="align-middle p-1">Email</th>
+                        <th class="align-middle p-1">Fecha compra</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="align-middle p-1"><%=userName%></td>
+                                <td class="align-middle p-1"><%=userEmail%></td>
+                                <td class="align-middle p-1"><%=fechaC%></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    
                     <!-- CARRITO -->
                     <table class="table table-dark table-striped text-center">
                         <thead>
@@ -148,8 +169,8 @@
                                 <th scope="col">Foto</th>
                                 <th scope="col">Producto</th>
                                 <th scope="col">Categoría</th>
-                                <th scope="col">Precio</th>
                                 <th scope="col">Cantidad</th>
+                                <th scope="col">Precio</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -161,6 +182,7 @@
                                 Producto prod = DB.infoProductoPorId(lp.getProductos_idproductos());
                                 contadorItems += lp.getCantidad();
                                 total += lp.getCantidad() * prod.getPrecio();
+
                                 int catego = prod.getCategoria();
                                 switch (catego) {
                                     case 1:
@@ -188,32 +210,34 @@
                                 <th scope="row " ><img 
                                         data-toggle="modal"
                                         data-target="#exampleModal<%=prod.getId_producto()%>"
-                                        class="img-fluid rounded" width="100px" src="images_zapatillas/<%=categoria%>/<%=prod.getFoto()%>"></th>
+                                        class="img-fluid rounded fotitoCarrito" width="100px" src="images_zapatillas/<%=categoria%>/<%=prod.getFoto()%>"></th>
                                 <td class="align-middle"><%=prod.getNombre_producto()%></td>
-                                <td class="align-middle"><%=categoria%></td>                              
-                                <td class="align-middle"><%=prod.getPrecio()%>€/ud.</td>
+                                <td class="align-middle text-capitalize"><%=categoria%></td>  
                                 <td class="align-middle"><%=lp.getCantidad()%></td>
+                                <td class="align-middle"><%=prod.getPrecio()%>€/ud.</td>
+
 
                             </tr>
 
                             <%}%>
                             <tr>
-                                <th scope="row">#</th>
+                                <th scope="row"></th>
                                 <td></td>
                                 <td></td>
-                                <td>Precio total</td>
                                 <td>Artículos</td>
+                                <td>Total</td>
                                 <td></td>
                             </tr>
                             <tr>
-                                <th class="align-middle" scope="row">#</th>
+                                <th class="align-middle" scope="row"></th>
                                 <td></td>
                                 <td></td>
-                                <td class="align-middle"><%if (contadorItems > 0) {%><%=df.format(total)%><%} else {%>0<%}%>€</td>
+
                                 <td class="align-middle"><%=contadorItems%></td>
+                                <td class="align-middle"><%if (contadorItems > 0) {%><%=df.format(total)%><%} else {%>0<%}%>€</td>
                                 <td class="align-middle">
 
-                                    <a href="vistaAdmin.jsp"  class="btn btn-outline-info">Volver a pedidos</a></td>
+                                    <a href="pedidosTramitados.jsp"  class="btn btn-outline-info">Volver a pedidos</a></td>
 
                             </tr>
 
@@ -383,6 +407,27 @@
         <%}%>
 
         <!-- MODAL -->
+         <!-- Modal confirm -->
+        <div class="modal fade" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="modalLogout" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header  w-100">
+                        <h5 class="modal-title w-100 font-weight-bold text-danger"><p class="w-100 text-center">Aviso</p></h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center">¿Está seguro que quiera cerrar sesión?</p>
+                    </div>
+                    <div class="modal-footer ">
+                        <a href="logout"   class="btn btn-white text-dark">Si</a>
+                        <button type="button" class="btn btn-dark text-white" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal confirm -->
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

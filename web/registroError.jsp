@@ -10,7 +10,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
 
-        <title>indexError</title>
+        <title>NIKE</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -26,6 +26,7 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
         <!------ Include the above in your HEAD tag ---------->
+        <link rel="shortcut icon" href="imagenes/error.png" type="image/x-icon">
     </head>
     <%
         String erroresDeRegistro = "";

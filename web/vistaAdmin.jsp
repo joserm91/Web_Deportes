@@ -1,3 +1,6 @@
+<%@page import="modelo.Lineal"%>
+<%@page import="modelo.ProductoEstrella"%>
+<%@page import="java.util.*"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -8,6 +11,11 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="modelo.Producto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%@ page import="com.google.gson.Gson"%>
+<%@ page import="com.google.gson.JsonObject"%>
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,14 +28,18 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
 
-        <title>Novedades</title>
+        <title>Administración</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@1,700&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/79a941ea93.js" crossorigin="anonymous"></script>
         <!-- Custom styles for this template -->
         <link href="css/simple-sidebar.css" rel="stylesheet" />
         <link rel="stylesheet" href="css/index.css" />
+        <link rel="stylesheet" href="css/cssGeneral.css" />
+        <link rel="shortcut icon" href="imagenes/admin.png" type="image/x-icon">
     </head>
     <%
         HttpSession sesion = request.getSession();
@@ -41,10 +53,49 @@
             rd = request.getRequestDispatcher("indexError.jsp");
             rd.forward(request, response);
         }
-        ArrayList<Pedido> listaDePedidos = DB.pedidosTramitados();
+        ArrayList<ProductoEstrella> mejorVendidos = DB.mejorVendidos();
+        ArrayList<Lineal> linealList = DB.graficaLineal();
         DecimalFormat df = new DecimalFormat("#.00");
 
+        /* ======== GRÁFICA ===========*/
+        Gson gsonObj = new Gson();
+        Map<Object, Object> map = null;
+        List<Map<Object, Object>> list = new ArrayList<Map<Object, Object>>();
+
+        int c = 0;
+        for (ProductoEstrella producto : mejorVendidos) {
+            map = new HashMap<Object, Object>();
+
+            map.put("label", producto.getNombre_producto());
+            map.put("y", producto.getVendidas());
+
+            if (c == 0) {
+                map.put("exploded", true);
+            }
+            c++;
+            list.add(map);
+            map = null;
+        }
+
+        String dataPoints = gsonObj.toJson(list);
+
+        Gson gsonObj2 = new Gson();
+        Map<Object, Object> map2 = null;
+        List<Map<Object, Object>> list2 = new ArrayList<Map<Object, Object>>();
+
+        String meses[] = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+
+        for (Lineal li : linealList) {
+            map2 = new HashMap<Object, Object>();
+            map2.put("label", meses[li.getMes()]);
+            map2.put("y", li.getCantidad());
+            list2.add(map2);
+            map2 = null;
+        }
+
+        String dataPoints2 = gsonObj2.toJson(list2);
     %>
+
     <body>
         <div class="d-flex" id="wrapper">
             <!-- Sidebar -->
@@ -132,9 +183,11 @@
                             <p class="lead font-weight-bold text-center justify-content-center  p-1"><%=user.getUsername()%></p>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-dark nav-link text-white mr-2" href="logout"
-                               >Cerrar Sesión</a
-                            >
+
+                            <a href="logout" id="btnCerrar" data-toggle="modal" data-target="#modalLogout">
+                                <!-- cerrar sesion -->
+                                <i class="fas fa-power-off fa-2x btnOff mt-2"></i>
+                            </a>
                         </li>
 
                         <li>
@@ -144,8 +197,10 @@
                 </nav>
                 <!-- CONTAINER LOG + DINAMIC PAGE -->
                 <div class="container-fluid mt-5">
-                   
-                   
+
+                    <div id="chartContainer" style="height: 370px; width: 100%;overflow: hidden;"></div>                    
+                    <div id="chartContainer2" style="height: 370px; width: 100%; margin-top: 50px;overflow: hidden;"></div>
+                    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
                 </div>
                 <!-- CONTAINER LOGO + DINAMIC PAGE -->
             </div>
@@ -251,6 +306,50 @@
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
             });
+            /* =============== GRÁFICA ===================== */
+            window.onload = function () {
+
+                var chart = new CanvasJS.Chart("chartContainer", {
+                    theme: "light2",
+                    animationEnabled: true,
+                    exportFileName: "web nike",
+                    exportEnabled: true,
+                    title: {
+                        text: "Más vendidos"
+                    },
+                    data: [{
+                            type: "pie",
+                            showInLegend: true,
+                            legendText: "{label}",
+                            toolTipContent: "{label}: <strong>{y} unidades</strong>",
+                            indexLabel: "{label}",
+                            dataPoints: <%out.print(dataPoints);%>
+                        }]
+                });
+
+                chart.render();
+                //--------------------
+                var chart2 = new CanvasJS.Chart("chartContainer2", {
+                    theme: "light2",
+                    title: {
+                        text: "Pedidos por meses"
+                    },
+                    axisX: {
+                        title: ""
+                    },
+                    axisY: {
+                        title: "",
+                        includeZero: true
+                    },
+                    data: [{
+                            type: "line",
+                            yValueFormatString: "#,## Pedidos",
+                            dataPoints: <%out.print(dataPoints2);%>
+                        }]
+                });
+                chart2.render();
+
+            }
         </script>
     </body>
 </html>
