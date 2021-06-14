@@ -26,7 +26,7 @@
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
- <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@1,700&display=swap" rel="stylesheet">
         <script src="https://kit.fontawesome.com/79a941ea93.js" crossorigin="anonymous"></script>
         <!-- Custom styles for this template -->
@@ -39,8 +39,16 @@
         HttpSession sesion = request.getSession();
         Usuario user = (Usuario) sesion.getAttribute("admin");
         RequestDispatcher rd;
-        try{
-        if (user == null) {
+        try {
+            if (user == null) {
+                String faltaLog = "* No se ha iniciado sesión.";
+                request.getServletContext().setAttribute("faltaLog", faltaLog);
+                String erroresEnLogin = "";
+                request.getServletContext().setAttribute("erroresEnLogin", erroresEnLogin);
+                rd = request.getRequestDispatcher("indexError.jsp");
+                rd.forward(request, response);
+            }
+        } catch (Exception e) {
             String faltaLog = "* No se ha iniciado sesión.";
             request.getServletContext().setAttribute("faltaLog", faltaLog);
             String erroresEnLogin = "";
@@ -48,15 +56,6 @@
             rd = request.getRequestDispatcher("indexError.jsp");
             rd.forward(request, response);
         }
-        }catch(Exception e){
-            String faltaLog = "* No se ha iniciado sesión.";
-            request.getServletContext().setAttribute("faltaLog", faltaLog);
-            String erroresEnLogin = "";
-            request.getServletContext().setAttribute("erroresEnLogin", erroresEnLogin);
-            rd = request.getRequestDispatcher("indexError.jsp");
-            rd.forward(request, response);
-        }
-        
 
         DecimalFormat df = new DecimalFormat("#.00");
         ArrayList<BestCliente> lista = DB.mejoresClientes();
@@ -68,48 +67,50 @@
             <!-- Sidebar -->
             <div class="bg-white border-right" id="sidebar-wrapper">
                 <div class="sidebar-heading text-center">
-                    <img src="imagenes/admin.png" width="60px" alt="" srcset="" />
+                    <a href="vistaAdmin.jsp" >               
+                        <img src="imagenes/admin.png" width="60px" alt="" srcset="" />
+                    </a>
+
                 </div>
-                <div class="list-group list-group-flush">
-                   
+                <div class="list-group list-group-flush mt-4">
+
                     <a
-                        href="vistaAdmin.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Pedidos Tramitados</a
-                    >
+                        href="pedidosTramitados.jsp"
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-boxes fa-3x"></i><span style="font-size: 13px">Pedidos Tramitados</span></a>
                     <a
                         href="topVentas.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Top ventas</a
-                    >
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-medal fa-3x"></i><span style="font-size: 13px">Top Ventas</span></a>
                     <a
                         href="mejoresClientes.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Mejores clientes</a
+                        class="list-group-item list-group-item-action  bg-dark herramientasLinks text-center active"
+                        ><i class="fas fa-crown fa-3x"></i><span style="font-size: 13px">Mejores clientes</span></a
                     >
                     <a
                         href="pedidosPorFecha.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Ordenar por fecha</a
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-calendar fa-3x"></i><span style="font-size: 13px">Filtrar por fecha</span></a
                     >
-                     <a
+                    <a
                         href="pedidosPorUsuario.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Ver pedidos de un usuario</a
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-users fa-3x"></i><span style="font-size: 13px">Filtrar por usuario</span></a
                     > 
-                     <a
+
+                    <a
                         href="pedidosPorProducto.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Pedidos por producto</a
+                        class="list-group-item list-group-item-action  bg-white herramientasLinks text-center"
+                        ><i class="fas fa-cubes fa-3x"></i><span style="font-size: 13px">Filtrar por producto</span></a
                     > 
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
 
-            <!-- Page Content -->
-            <div id="page-content-wrapper">
-                <nav class="navbar navbar-expand-lg navbar-white bg-white ">
-                    <a href class="lead text-dark font-weight-bold" id="menu-toggle"
+              <!-- Page Content -->
+           <div class="container-fluid" id="page-content-wrapper">
+                <nav class="navbar navbar-expand-lg navbar-white bg-light ">
+                     <a href class="lead text-dark font-weight-bold" id="menu-toggle"
                        >Herramientas de administración</a
                     >
 
@@ -129,7 +130,7 @@
                         <li class="nav-item">
                             <p class="lead font-weight-bold text-center justify-content-center  p-1"><%=user.getUsername()%></p>
                         </li>
-                       <li class="nav-item">
+                        <li class="nav-item">
 
                             <a href="logout" id="btnCerrar" data-toggle="modal" data-target="#modalLogout">
                                 <!-- cerrar sesion -->
@@ -143,8 +144,8 @@
                     </ul>
                 </nav>
                 <!-- CONTAINER LOG + DINAMIC PAGE -->
-                <div class="container-fluid">
-                    <h1 class="font-weight-bold">Pedidos tramitados</h1>
+                <div class="container-fluid mt-5">
+                     <h1 class="font-weight-bold"><i class="fas fa-crown fa-3x"></i></h1>&nbsp;<h3>Mejores clientes</h3>
                     <!-- CARRITO -->
                     <table class="table table-dark table-striped text-center">
                         <thead>
@@ -162,7 +163,7 @@
 
 
                         <tr>
-                            
+
                             <td class="align-middle"><%=c.getUsername()%></td>
                             <td class="align-middle"><%=c.getEmail()%></td>                              
                             <td class="align-middle"><%=c.getNumeroPedidos()%></td>  
@@ -267,7 +268,7 @@
             <!-- Copyright -->
         </footer>
         <!-- FOOTER -->
- <!-- Modal confirm -->
+        <!-- Modal confirm -->
         <div class="modal fade" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="modalLogout" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">

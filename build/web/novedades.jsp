@@ -17,7 +17,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
 
-        <title>Novedades</title>
+        <title>Novedades, lo último en zapatillas deportivas.</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -28,11 +28,11 @@
         <link href="css/simple-sidebar.css" rel="stylesheet" />
         <link rel="stylesheet" href="css/index.css" />
         <link rel="stylesheet" href="css/cssGeneral.css" />
-        <link rel="shortcut icon" href="imagenes/LogoProductoNike.png" type="image/x-icon" sizes="32x32">
+        <link rel="shortcut icon" href="imagenes/LogoProductoNike.png" type="image/x-icon" sizes="32x32" >
     </head>
 
     <style>
-       
+
     </style>
     <%
         HttpSession sesion = request.getSession();
@@ -79,6 +79,7 @@
             <div class="bg-white border-right" id="sidebar-wrapper">
                 <div class="sidebar-heading text-center">
                     <img src="imagenes/nike-3.svg" width="60px" alt="" srcset="" />
+                    
                 </div>
                 <div class="list-group list-group-flush">
                     <a
@@ -113,23 +114,11 @@
             <!-- Page Content -->
             <div id="page-content-wrapper">
 
-                <nav class="navbar navbar-expand-lg navbar-white bg-white position-sticky" id="myNav">
+                <nav class="navbar navbar-expand-lg navbar-white bg-light position-sticky" id="myNav">
                     <a href class="lead text-dark " id="menu-toggle"
                        ><i class="fas fa-bars fa-1x"></i></a
                     >
-
-                    <button
-                        class="navbar-toggler"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                        >
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
+                    <div class="text-center"><img src="imagenes/gifFondo.gif" width="100px" height="60px" ></div>
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                         <li class="nav-item">
                             <p class="lead font-weight-bold text-center justify-content-center mt-2"><%=user.getUsername()%></p>
@@ -147,9 +136,10 @@
                                     class="img-fluid ml-3"
                                     src="imagenes/carrito.svg"
                                     width="30px"
-                                    alt=""
+                                    alt="cart"
                                     srcset=""
-                                    /><%if (LP != null) {%>
+                                    />
+                                <%if (LP != null) {%>
                                 <span class="lead justify-content-center text-center font-weight-bold bg-dark text-white rounded-circle p-1"><%=objetos%></span>
                                 <%} else {%>
                                 <span class="lead justify-content-center text-center font-weight-bold bg-dark text-white rounded-circle p-1">0</span>
@@ -168,13 +158,14 @@
                         if (repo.equals("0")) {%>
 
                     <div class="container-fluid">
-                        <video autoplay="autoplay"  id="video_background" preload="auto" volume="25">
+                        <video autoplay="autoplay"  id="video_background" preload="auto" volume="25" style="">
                             <source src="videos/NIKE LOGO ANIMATION.mp4" type="video/mp4" />
                             <video/>
                     </div>
 
                     <% sesion.setAttribute("reproducciones", "1");
                         }%>
+
                     <h1 class="my-4">
 
                         <img
@@ -184,8 +175,10 @@
                             srcset=""
                             />
                     </h1>
-                    <h2 class="display-3 parah2 mt-5">EQUÍPATE</h2>
+                    <div class="row">
+                        <div class="col-4-lg"> <h2 class="display-3 parah2 mt-4" style="">EQUÍPATE</h2> </div>
 
+                    </div>
                     <div class="container-fluid mt-5 ">
                         <h2 id="catFont">Novedades</h2>
                         <div class="row">
@@ -202,6 +195,7 @@
                                     data-toggle="modal"
                                     data-target="#exampleModal<%=info.getId_producto()%>"
                                     /></a>
+
                                 <div class="descZapatilla">
                                     <h5><%=info.getNombre_producto()%></h5>
                                     <p class="price text-success"><%=info.getPrecio()%>€</p>
@@ -209,6 +203,7 @@
                                     <a href="ServletCarrito?idproducto=<%=info.getId_producto()%>&pathInfo=novedades.jsp" class="btn btn-outline-dark btnAañadir"
                                        ><i class="fas fa-shopping-cart"></i> Añadir a la cesta </a
                                     > 
+                                   
                                 </div>
                             </div>
 
@@ -382,16 +377,17 @@
 
         <!-- Menu Toggle Script -->
         <script>
-let myNav = document.getElementById("myNav");
-
-let videoInicio = document.getElementById("video_background");
+                    let
+                    myNav = document.getElementById("myNav");
+                    let
+                    videoInicio = document.getElementById("video_background");
                     if (videoInicio != undefined) {
-                      $("#myNav").hide();
+                        $("#myNav").hide();
                         setTimeout(function () {
-                            
+
                             $("#video_background").hide();
                             $("#wrapper").toggleClass("toggled");
-                           $("#myNav").show();
+                            $("#myNav").show();
                         }, 4000)
 
                         $("#wrapper").toggleClass("toggled");

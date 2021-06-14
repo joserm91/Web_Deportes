@@ -66,12 +66,16 @@
     -moz-box-shadow: 3px 3px 9px -1px rgba(0,0,0,0.75);
 }
 .herramientasLinks{
+    display: flex;
+    flex-direction:column;
     transition-property: background-color;
     transition-duration: 0.3s;
+    
 }
 .herramientasLinks:hover{
     background-color: #343a40 !important;
     color:white !important;
+    
 }
 
 a:active{

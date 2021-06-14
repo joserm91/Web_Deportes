@@ -65,42 +65,43 @@
     %>
     <body>
         <div class="d-flex" id="wrapper">
-            <!-- Sidebar -->
+           <!-- Sidebar -->
             <div class="bg-white border-right" id="sidebar-wrapper">
                 <div class="sidebar-heading text-center">
-                    <img src="imagenes/admin.png" width="60px" alt="" srcset="" />
+                    <a href="vistaAdmin.jsp" >               
+                        <img src="imagenes/admin.png" width="60px" alt="" srcset="" />
+                    </a>
+
                 </div>
-                <div class="list-group list-group-flush">
-                   
+               
+                <div class="list-group list-group-flush mt-4">
                     <a
-                        href="vistaAdmin.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Pedidos Tramitados</a
-                    >
+                        href="pedidosTramitados.jsp"
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-boxes fa-3x"></i><span style="font-size: 13px">Pedidos Tramitados</span></a>
                     <a
                         href="topVentas.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Top ventas</a
-                    >
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-medal fa-3x"></i><span style="font-size: 13px">Top Ventas</span></a>
                     <a
                         href="mejoresClientes.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Mejores clientes</a
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center" 
+                        ><i class="fas fa-crown fa-3x"></i><span style="font-size: 13px">Mejores clientes</span></a
                     >
                     <a
                         href="pedidosPorFecha.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Ordenar por fecha</a
-                    > 
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-calendar fa-3x"></i><span style="font-size: 13px">Filtrar por fecha</span></a
+                    >
                     <a
                         href="pedidosPorUsuario.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Ver pedidos de un usuario</a
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-users fa-3x"></i><span style="font-size: 13px">Filtrar por usuario</span></a
                     > 
                     <a
                         href="pedidosPorProducto.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Pedidos por producto</a
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-cubes fa-3x"></i><span style="font-size: 13px">Filtrar por producto</span></a
                     > 
 
                 </div>
@@ -144,8 +145,8 @@
                     </ul>
                 </nav>
                 <!-- CONTAINER LOG + DINAMIC PAGE -->
-                <div class="container-fluid mt-5">
-                    <table class="text-center bg-dark text-white" border="1">
+                <div class="container-fluid mt-5 ">
+                    <table class="table table-dark text-center w-50" style="margin-bottom: 10px !important;" border="1">
                         <h3>Nº Pedido: <%=idPedido%></h3>
                         <thead>
                         <th class="align-middle p-1">Usuario</th>

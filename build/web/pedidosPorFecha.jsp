@@ -54,56 +54,60 @@
             <!-- Sidebar -->
             <div class="bg-white border-right" id="sidebar-wrapper">
                 <div class="sidebar-heading text-center">
-                    <img src="imagenes/admin.png" width="60px" alt="" srcset="" />
-                </div>
-                <div class="list-group list-group-flush">
+                    <a href="vistaAdmin.jsp" >               
+                        <img src="imagenes/admin.png" width="60px" alt="" srcset="" />
+                    </a>
 
+                </div>
+               
+                <div class="list-group list-group-flush mt-4">
                     <a
-                        href="vistaAdmin.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Pedidos Tramitados</a
-                    >
+                        href="pedidosTramitados.jsp"
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-boxes fa-3x"></i><span style="font-size: 13px">Pedidos Tramitados</span></a>
                     <a
                         href="topVentas.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Top ventas</a
-                    >
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-medal fa-3x"></i><span style="font-size: 13px">Top Ventas</span></a>
                     <a
                         href="mejoresClientes.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Mejores clientes</a
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center" 
+                        ><i class="fas fa-crown fa-3x"></i><span style="font-size: 13px">Mejores clientes</span></a
                     >
                     <a
-                        href="#"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Ordenar por fecha</a
-                    >           
-                    <form class="form-group" action="ServletFiltroFechas" method="POST">
-                        <label class="font-weight-bold">Desde:</label><input class="form-control" type="date" name="fecha1">
-                        <label class="font-weight-bold">Hasta</label><input class="form-control" type="date" name="fecha2">
-                        <input class="btn btn-outline-info" type="submit" value="Filtrar">
+                        href="pedidosPorFecha.jsp"
+                        class="list-group-item list-group-item-action  bg-dark herramientasLinks text-center active"
+                        ><i class="fas fa-calendar fa-3x"></i><span style="font-size: 13px">Filtrar por fecha</span></a
+                    >
+                    <form class="form-group" action="ServletFiltroFechas" method="POST" style=" padding: 1px;margin: 5px;box-shadow: 3px 3px 3px">
+                        <label class="font-weight-bold">&nbsp; Desde:</label><input class="form-control" type="date" name="fecha1">
+                        <label class="font-weight-bold">&nbsp; Hasta:</label><input class="form-control" type="date" name="fecha2">
+                        <input class="btn btn-outline-info w-100" type="submit" value="Filtrar">
                     </form>
                     <a
                         href="pedidosPorUsuario.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Ver pedidos de un usuario</a
-                    >
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-users fa-3x"></i><span style="font-size: 13px">Filtrar por usuario</span></a
+                    > 
                     <a
                         href="pedidosPorProducto.jsp"
-                        class="list-group-item list-group-item-action bg-white"
-                        >Pedidos por producto</a
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-cubes fa-3x"></i><span style="font-size: 13px">Filtrar por producto</span></a
                     > 
+
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
+                
+                    
+                  
 
             <!-- Page Content -->
-            <div id="page-content-wrapper">
-                <nav class="navbar navbar-expand-lg navbar-white bg-white ">
-                    <a href class="lead text-dark font-weight-bold" id="menu-toggle"
+            <div class="container-fluid" id="page-content-wrapper">
+                <nav class="navbar navbar-expand-lg navbar-white bg-light ">
+                     <a href class="lead text-dark font-weight-bold" id="menu-toggle"
                        >Herramientas de administración</a
                     >
-
                     <button
                         class="navbar-toggler"
                         type="button"
@@ -116,7 +120,7 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                     <ul class="navbar-nav ml-auto  mt-lg-2 ">
                         <li class="nav-item">
                             <p class="lead font-weight-bold text-center justify-content-center  p-1"><%=user.getUsername()%></p>
                         </li>
@@ -134,8 +138,9 @@
                     </ul>
                 </nav>
                 <!-- CONTAINER LOG + DINAMIC PAGE -->
-                <div class="container-fluid">
-                    <h1 class="font-weight-bold">Pedidos tramitados</h1>
+                <div class="container-fluid mt-5">
+                    <h1 class="font-weight-bold"><i class="fas fa-calendar fa-3x"></i></h1>&nbsp;<h3>Filtrado por fecha</h3>
+                    
                     <!-- CARRITO -->
                     <table class="table table-dark table-striped text-center">
                         <thead>
@@ -168,7 +173,7 @@
                             }
                         %>
                         <tr>
-                            <th scope="row"><a class="text-info" href="desglose.jsp?idPedido=<%=pedi.getIdpedidos()%>"><%=pedi.getIdpedidos()%> - Desglose</a></th>
+                            <th scope="row"><a class="text-info" href="desglose.jsp?idPedido=<%=pedi.getIdpedidos()%>&userName=<%=infoU.getUsername()%>&userEmail=<%=infoU.getEmail()%>&fechaC=<%=fechaC%>"><i class="fas fa-bars fa-1x"></i> </a></th>
                             <td class="align-middle"><%=df.format(pedi.getPrecio_total())%>€</td>
                             <td class="align-middle"><%=fechaC%></td>                              
                             <td class="align-middle"><%=infoU.getUsername()%></td>
@@ -177,7 +182,7 @@
                         </tr>
                         <%}%>
                         <%} else {%>
-                        <tr>Introduzca el intervalo de fechas.</tr>
+                        <tr class="lead text-danger">*Introduzca el intervalo de fechas.</tr>
 
 
                         <%}%>

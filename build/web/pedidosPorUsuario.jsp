@@ -63,43 +63,29 @@
                     </a>
 
                 </div>
-                <!-- acordeon -->
-                <div id="accordion" class="container-fluid">
-
-                    <h5 class="mb-0 text-center">
-
-                        <button class="btn btn-dark text-white collapsed " data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                            Herramientas
-                        </button>
-                    </h5>
-                </div>
-                <!-- acordeon -->
-                <div id="collapseTwo" class="collapse show m-2" aria-labelledby="headingTwo" data-parent="#accordion">
-
+                <div class="list-group list-group-flush mt-4">
                     <a
                         href="pedidosTramitados.jsp"
-                        class="list-group-item list-group-item-action bg-white herramientasLinks"
-                        >Pedidos Tramitados</a
-                    >
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-boxes fa-3x"></i><span style="font-size: 13px">Pedidos Tramitados</span></a>
                     <a
                         href="topVentas.jsp"
-                        class="list-group-item list-group-item-action bg-white herramientasLinks"
-                        >Top ventas</a
-                    >
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-medal fa-3x"></i><span style="font-size: 13px">Top Ventas</span></a>
                     <a
                         href="mejoresClientes.jsp"
-                        class="list-group-item list-group-item-action bg-white herramientasLinks" 
-                        >Mejores clientes</a
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center" 
+                        ><i class="fas fa-crown fa-3x"></i><span style="font-size: 13px">Mejores clientes</span></a
                     >
                     <a
                         href="pedidosPorFecha.jsp"
-                        class="list-group-item list-group-item-action bg-white herramientasLinks"
-                        >Ordenar por fecha</a
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-calendar fa-3x"></i><span style="font-size: 13px">Filtrar por fecha</span></a
                     >
                     <a
                         href="pedidosPorUsuario.jsp"
-                        class="list-group-item list-group-item-action bg-dark herramientasLinks active"
-                        >Filtrar por usuario</a
+                        class="list-group-item list-group-item-action  bg-dark herramientasLinks text-center active"
+                        ><i class="fas fa-users fa-3x"></i><span style="font-size: 13px">Filtrar por usuario</span></a
                     > 
                     <form class="form-group" action="ServletFiltroUsers" method="POST">
                         <label class="font-weight-bold">Username:</label><input class="form-control" type="text" name="username">
@@ -108,18 +94,17 @@
                     </form>
                     <a
                         href="pedidosPorProducto.jsp"
-                        class="list-group-item list-group-item-action bg-white herramientasLinks"
-                        >Pedidos por producto</a
+                        class="list-group-item list-group-item-action  bg-white herramientasLinks text-center"
+                        ><i class="fas fa-cubes fa-3x"></i><span style="font-size: 13px">Filtrar por producto</span></a
                     > 
 
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
-            <!-- 
-            -->
+
             <!-- Page Content -->
-            <div id="page-content-wrapper">
-                <nav class="navbar navbar-expand-lg navbar-white bg-white ">
+            <div class="container-fluid" id="page-content-wrapper">
+                <nav class="navbar navbar-expand-lg navbar-white bg-light ">
                     <a href class="lead text-dark font-weight-bold" id="menu-toggle"
                        >Herramientas de administración</a
                     >
@@ -154,8 +139,8 @@
                     </ul>
                 </nav>
                 <!-- CONTAINER LOG + DINAMIC PAGE -->
-                <div class="container-fluid">
-                    <h1 class="font-weight-bold">Pedidos tramitados</h1>
+                <div class="container-fluid mt-5">
+                    <h1 class="font-weight-bold"><i class="fas fa-users fa-3x"></i></h1>&nbsp;<h3>Filtrado por usuario</h3>
                     <!-- CARRITO -->
                     <table class="table table-dark table-striped text-center">
                         <thead>
@@ -188,7 +173,7 @@
                             }
                         %>
                         <tr>
-                            <th scope="row"><a class="text-info" href="desglose.jsp?idPedido=<%=pedi.getIdpedidos()%>"><%=pedi.getIdpedidos()%> - Desglose</a></th>
+                            <th scope="row"><a class="text-info" href="desglose.jsp?idPedido=<%=pedi.getIdpedidos()%>&userName=<%=infoU.getUsername()%>&userEmail=<%=infoU.getEmail()%>&fechaC=<%=fechaC%>"><i class="fas fa-bars fa-1x"></i> </a></th>
                             <td class="align-middle"><%=df.format(pedi.getPrecio_total())%>€</td>
                             <td class="align-middle"><%=fechaC%></td>                              
                             <td class="align-middle"><%=infoU.getUsername()%></td>
@@ -293,7 +278,7 @@
             <!-- Copyright -->
         </footer>
         <!-- FOOTER -->
- <!-- Modal confirm -->
+        <!-- Modal confirm -->
         <div class="modal fade" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="modalLogout" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">

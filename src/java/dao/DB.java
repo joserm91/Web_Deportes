@@ -43,13 +43,22 @@ public class DB {
             PreparedStatement pst = cnn.prepareStatement(sql);
             pst.setDouble(1, total);
             pst.setInt(2, idpedido);
-
             pst.executeUpdate();
+
+            try {
+
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             return true;
 
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> infoProductoPorId()");
         }
+
         return false;
     }
 
@@ -77,6 +86,15 @@ public class DB {
                 boolean comprado = true;
                 pedi = new Pedido(idUser, precio_total, timestamp, idProducto, comprado);
                 listaDePedidos.add(pedi);
+            }
+
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
 
         } catch (SQLException ex) {
@@ -126,7 +144,14 @@ public class DB {
             while (rs.next()) {
                 return true;
             }
-
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> usuarioExiste()");
             return false;
@@ -158,7 +183,14 @@ public class DB {
 
                 user = new Usuario(idusuario, usuario, password, email, rol);
             }
-
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> confirmaRol()");
 
@@ -181,7 +213,14 @@ public class DB {
             while (rs.next()) {
                 return "repe";
             }
-
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> usuarioRepetido()");
             return "repe";
@@ -204,7 +243,14 @@ public class DB {
             while (rs.next()) {
                 return "repe";
             }
-
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> emailRepetido()");
             return "repe";
@@ -226,6 +272,16 @@ public class DB {
             pst.setString(3, rol);
             pst.setString(4, email);
             pst.executeUpdate();
+
+            try {
+
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
             return true;
 
         } catch (SQLException ex) {
@@ -257,7 +313,14 @@ public class DB {
                 infoPro = new Producto(id_producto, nombre_producto, categoria, precio, foto);
                 listaProductos.add(infoPro);
             }
-
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> infoProductosPorCategoria()");
 
@@ -319,7 +382,14 @@ public class DB {
                 }
 
             }
-
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> addToCesta()");
 
@@ -386,7 +456,14 @@ public class DB {
                 pedido = new Pedido(idpedido, precio_total, fecha, idUsuario, comprado);
 
             }
-
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> addToCesta()");
         }
@@ -436,7 +513,14 @@ public class DB {
                 }
 
             }
-
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> currentCesta()");
 
@@ -469,7 +553,14 @@ public class DB {
                 LineaDePedido infoLP = new LineaDePedido(id_lineadepedido, cantidad, pedidos_idpedidos, productos_idproductos);
                 lp.add(infoLP);
             }
-
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> infoLP()");
         }
@@ -499,7 +590,14 @@ public class DB {
                 prod = new Producto(idproductos, nombre_producto, categoria, precio, foto);
 
             }
-
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> infoProductoPorId()");
         }
@@ -523,6 +621,14 @@ public class DB {
                     pst.setInt(2, idPedido);
                     pst.setInt(3, idProducto);
                     pst.executeUpdate();
+                    try {
+
+                        pst.close();
+                        cnn.close();System.out.print("cnn close");
+                    } catch (SQLException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                     return true;
                 case "restar":
                     cantidad--;
@@ -532,6 +638,14 @@ public class DB {
                     pst.setInt(2, idPedido);
                     pst.setInt(3, idProducto);
                     pst.executeUpdate();
+                    try {
+
+                        pst.close();
+                        cnn.close();System.out.print("cnn close");
+                    } catch (SQLException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                     return true;
 
                 case "eliminar":
@@ -540,8 +654,24 @@ public class DB {
                     pst.setInt(1, idPedido);
                     pst.setInt(2, idProducto);
                     pst.executeUpdate();
+                    try {
+
+                        pst.close();
+                        cnn.close();System.out.print("cnn close");
+                    } catch (SQLException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                     return true;
                 default:
+                    try {
+
+                        pst.close();
+                        cnn.close();System.out.print("cnn close");
+                    } catch (SQLException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                     return false;
 
             }
@@ -575,7 +705,14 @@ public class DB {
                 pedi = new Pedido(id, precio_total, fecha, idUser, comprado);
                 pedidosTramitados.add(pedi);
             }
-
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> infoProductoPorId()");
         }
@@ -604,7 +741,14 @@ public class DB {
                 String rol = rs.getString("rol");
                 user = new Usuario(id, username, password, email, rol);
             }
-
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> infoProductoPorId()");
         }
@@ -636,7 +780,14 @@ public class DB {
                 pedi = new Pedido(id, precio_total, fecha, idUser, comprado);
                 pedidosTramitados.add(pedi);
             }
-
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> infoProductoPorId()");
         }
@@ -668,7 +819,14 @@ public class DB {
 
                 prod = new ProductoEstrella(vendidas, productos_idproductos, categoria, nombre_producto, foto, precio, total_ganancias);
             }
-
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> infoProductoPorId()");
         }
@@ -696,7 +854,14 @@ public class DB {
                 cliente = new BestCliente(name, email, numero_depedidos, gastado);
                 lista.add(cliente);
             }
-
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> infoProductoPorId()");
         }
@@ -742,7 +907,14 @@ public class DB {
                 System.out.println(pedi);
                 pedidosTramitados.add(pedi);
             }
-
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> infoProductoPorId()");
         }
@@ -771,7 +943,14 @@ public class DB {
                 prod = new Producto(idproductos, nombre_producto, categoria, precio, foto);
                 listaDeProductos.add(prod);
             }
-
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> infoProductoPorId()");
         }
@@ -803,18 +982,28 @@ public class DB {
                 listaMasVendidos.add(prod);
             }
 
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> infoProductoPorId()");
         }
 
         return listaMasVendidos;
     }
-     public static ArrayList<Lineal> graficaLineal() {
+
+    public static ArrayList<Lineal> graficaLineal() {
         Lineal li = null;
         ArrayList<Lineal> listaLineal = new ArrayList<Lineal>();
 
         Connection cnn = null;
-       
+
         try {
             cnn = CrearConexion();
 
@@ -823,17 +1012,24 @@ public class DB {
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
-               int cantidad = rs.getInt("vendido");
-               int mes = rs.getInt("mes");
-               li =new Lineal(cantidad, mes);
+                int cantidad = rs.getInt("vendido");
+                int mes = rs.getInt("mes");
+                li = new Lineal(cantidad, mes);
                 listaLineal.add(li);
             }
-
+            try {
+                rs.close();
+                pst.close();
+                cnn.close();System.out.print("cnn close");
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> infoProductoPorId()");
         }
 
         return listaLineal;
     }
-    
+
 }

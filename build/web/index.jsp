@@ -89,7 +89,7 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
 
-                                                    <form id="login-form" action="ServletRegistro_Login" method="GET" role="form" style="display: block;">
+                                                    <form id="login-form" action="ServletRegistro_Login" method="POST" role="form" style="display: block;">
                                                         <div class="form-group">
                                                             <%if (registroCorrecto != null) {%>
                                                             <span class="registroCorrecto" style="color: green"><%=registroCorrecto%></span>

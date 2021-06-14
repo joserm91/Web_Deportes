@@ -24,23 +24,19 @@ import modelo.Producto;
  */
 public class ServletControlProductos extends HttpServlet {
 
-   
-
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+
         int idProducto = Integer.parseInt(request.getParameter("productoSeleccionado"));
-       
+
         HttpSession sesion = request.getSession();
         RequestDispatcher rd;
-        ArrayList<Pedido>listaPedidosContenedores = DB.buscarPedidosContenedores(idProducto);
+        ArrayList<Pedido> listaPedidosContenedores = DB.buscarPedidosContenedores(idProducto);
         sesion.setAttribute("listaProductosDB", listaPedidosContenedores);
         rd = request.getRequestDispatcher("pedidosPorProducto.jsp");
         rd.forward(request, response);
-        
-    }
 
+    }
 
 }

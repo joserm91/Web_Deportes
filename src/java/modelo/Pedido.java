@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 
@@ -12,7 +13,7 @@ import java.sql.Timestamp;
  *
  * @author Ramos-PC
  */
-public class Pedido {
+public class Pedido implements Serializable{
     private int idpedidos;
     private double precio_total;
     private Timestamp fecha;

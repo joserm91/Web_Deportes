@@ -87,7 +87,7 @@
 
         for (Lineal li : linealList) {
             map2 = new HashMap<Object, Object>();
-            map2.put("label", meses[li.getMes()]);
+            map2.put("label", meses[li.getMes() - 1]);
             map2.put("y", li.getCantidad());
             list2.add(map2);
             map2 = null;
@@ -101,58 +101,40 @@
             <!-- Sidebar -->
             <div class="bg-white border-right" id="sidebar-wrapper">
                 <div class="sidebar-heading text-center">
-                    <img src="imagenes/admin.png" width="60px" alt="" srcset="" />
-                </div>
-                <!-- acordeon -->
-                <div id="accordion" class="container-fluid">
+                    <a href="vistaAdmin.jsp" >               
+                        <img src="imagenes/admin.png" width="60px" alt="" srcset="" />
+                    </a>
 
-                    <h5 class="mb-0 text-center">
-                        <button class="btn btn-dark text-white collapsed " data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Herramientas
-                        </button>
-                    </h5>
                 </div>
-                <!-- acordeon -->
-                <div id="collapseTwo" class="collapse m-2" aria-labelledby="headingTwo" data-parent="#accordion">
-                    <a
-                        href="#"
-                        class="list-group-item list-group-item-action bg-white herramientasLinks"
-                        >#</a
-                    >
-                    <a
-                        href="vistaAdmin.jsp"
-                        class="list-group-item list-group-item-action bg-white herramientasLinks"
-                        >Inicio</a
-                    >
+               
+                <div class="list-group list-group-flush mt-4">
                     <a
                         href="pedidosTramitados.jsp"
-                        class="list-group-item list-group-item-action bg-white herramientasLinks"
-                        >Pedidos Tramitados</a
-                    >
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-boxes fa-3x"></i><span style="font-size: 13px">Pedidos Tramitados</span></a>
                     <a
                         href="topVentas.jsp"
-                        class="list-group-item list-group-item-action bg-white herramientasLinks"
-                        >Top ventas</a
-                    >
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-medal fa-3x"></i><span style="font-size: 13px">Top Ventas</span></a>
                     <a
                         href="mejoresClientes.jsp"
-                        class="list-group-item list-group-item-action bg-white herramientasLinks" 
-                        >Mejores clientes</a
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center" 
+                        ><i class="fas fa-crown fa-3x"></i><span style="font-size: 13px">Mejores clientes</span></a
                     >
                     <a
                         href="pedidosPorFecha.jsp"
-                        class="list-group-item list-group-item-action bg-white herramientasLinks"
-                        >Ordenar por fecha</a
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-calendar fa-3x"></i><span style="font-size: 13px">Filtrar por fecha</span></a
                     >
                     <a
                         href="pedidosPorUsuario.jsp"
-                        class="list-group-item list-group-item-action bg-white herramientasLinks"
-                        >Filtrar por usuario</a
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-users fa-3x"></i><span style="font-size: 13px">Filtrar por usuario</span></a
                     > 
                     <a
                         href="pedidosPorProducto.jsp"
-                        class="list-group-item list-group-item-action bg-white herramientasLinks"
-                        >Pedidos por producto</a
+                        class="list-group-item list-group-item-action bg-white herramientasLinks text-center"
+                        ><i class="fas fa-cubes fa-3x"></i><span style="font-size: 13px">Filtrar por producto</span></a
                     > 
 
                 </div>
@@ -160,9 +142,9 @@
             <!-- /#sidebar-wrapper -->
 
             <!-- Page Content -->
-            <div id="page-content-wrapper">
+            <div class="container-fluid" id="page-content-wrapper">
                 <nav class="navbar navbar-expand-lg navbar-white bg-light ">
-                    <a href class="lead text-dark font-weight-bold" id="menu-toggle"
+                     <a href class="lead text-dark font-weight-bold" id="menu-toggle"
                        >Herramientas de administración</a
                     >
 
@@ -295,7 +277,27 @@
             <!-- Copyright -->
         </footer>
         <!-- FOOTER -->
-
+ <!-- Modal confirm -->
+        <div class="modal fade" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="modalLogout" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header  w-100">
+                        <h5 class="modal-title w-100 font-weight-bold text-danger"><p class="w-100 text-center">Aviso</p></h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center">¿Está seguro que quiera cerrar sesión?</p>
+                    </div>
+                    <div class="modal-footer ">
+                        <a href="logout"   class="btn btn-white text-dark">Si</a>
+                        <button type="button" class="btn btn-dark text-white" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal confirm -->
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

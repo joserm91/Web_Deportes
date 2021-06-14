@@ -30,7 +30,7 @@ public class ServletRegistro_Login extends HttpServlet {
 
     //------------------------------- LOGIN -----------------------------------------//
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ServletContext contexto = request.getServletContext();
         RequestDispatcher rd;
@@ -55,7 +55,7 @@ public class ServletRegistro_Login extends HttpServlet {
                 } else if (rol.equals("usuario")) {
                     //GO TO USER HTML
                     sesion.setAttribute("usuario", user);
-                     sesion.setAttribute("reproducciones", "0");
+                    sesion.setAttribute("reproducciones", "0");
                     Pedido pedido = DB.TienePedidoSinPagar(user);
 
                     if (pedido != null) {
@@ -101,7 +101,7 @@ public class ServletRegistro_Login extends HttpServlet {
     //------------------------------- REGISTRO -----------------------------------------//
     //REGISTRO
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
     }

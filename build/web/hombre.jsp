@@ -17,7 +17,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
 
-        <title>Hombre</title>
+        <title>Zapatillas, Ropa y Accesorios Nike para Hombre. Nike ES</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
