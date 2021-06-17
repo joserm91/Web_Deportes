@@ -21,7 +21,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
 
-        <title>Novedades</title>
+        <title>Top ventas</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -32,6 +32,7 @@
         <link href="css/simple-sidebar.css" rel="stylesheet" />
         <link rel="stylesheet" href="css/index.css" />
         <link rel="stylesheet" href="css/cssGeneral.css" />
+        <link rel="shortcut icon" href="imagenes/admin.png" type="image/x-icon">
     </head>
     <%
         HttpSession sesion = request.getSession();

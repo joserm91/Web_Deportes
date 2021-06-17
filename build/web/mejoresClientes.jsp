@@ -22,7 +22,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
 
-        <title>Top 3</title>
+        <title>Usuarios top</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
