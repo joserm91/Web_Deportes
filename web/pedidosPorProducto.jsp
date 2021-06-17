@@ -92,15 +92,17 @@
                         ><i class="fas fa-cubes fa-3x"></i><span style="font-size: 13px">Filtrar por producto</span></a
                     > 
                     <%if (listaDeProductos != null) {%>
-                    <form action="ServletControlProductos" method="POST" class="form-group   border-bottom" >
+                    <form action="ServletControlProductos" method="GET" class="form-group   border-bottom" >
                         <select name="productoSeleccionado" class="form-control">
-                            <%for (Producto prod : listaDeProductos) {%>
+                            <%for (Producto prod : listaDeProductos) {
+                            //System.out.println(prod.toString());%>
                             <option value="<%=prod.getId_producto()%>"><%=prod.getNombre_producto()%></option>
                             <%}%>
                         </select>
+                       
                         <%}%>
-                        
-                       <input class="btn btn-outline-info w-100" type="submit" value="Filtrar">
+                         <button class="btn btn-outline-info w-100" type="submit">Filtrar</button>
+                       
                     </form>
                 </div>
             </div>
@@ -163,12 +165,13 @@
                         <%for (Pedido pedi : listaDePedidos) {%>
                         <%
                             String fechaC = pedi.getFecha().toString();
-                            System.out.print(fechaC);
+                           
                             if (fechaC != null && fechaC != "") {
                                 fechaC = fechaC.substring(0, fechaC.length() - 2);
                                 fechaC = fechaC.replace(" ", " -- ");
                             }
                             Usuario infoU = DB.infoUsuario(pedi.getUsuarios_idusuarios());
+                            System.out.println(pedi.toString());
                             String estado = "";
                             if (pedi.isComprado()) {
                                 estado = "Tramitado";

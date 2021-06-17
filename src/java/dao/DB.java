@@ -39,16 +39,24 @@ public class DB {
 
         try {
             cnn = CrearConexion();
-            String sql = "UPDATE pedidos set comprado = 1,precio_total = ? WHERE idpedidos = ?";
+            String sql = "UPDATE pedidos set comprado = 1,precio_total = ?,fecha = ? WHERE idpedidos = ?";
             PreparedStatement pst = cnn.prepareStatement(sql);
+              java.util.Date d = new java.util.Date();
+            java.sql.Date fecha = new java.sql.Date(d.getTime());
+
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd kk:mm:ss");
+            String fechaC = formatoFecha.format(fecha);
+            
             pst.setDouble(1, total);
-            pst.setInt(2, idpedido);
+            pst.setInt(3, idpedido);
+            pst.setString(2, fechaC);
             pst.executeUpdate();
 
             try {
 
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -77,21 +85,24 @@ public class DB {
 
             while (rs.next()) {
                 int id = rs.getInt("idpedidos");
+                System.out.println("id Pedido" + id);
                 double precio_total = rs.getDouble("precio_total");
 
-                java.util.Date fecha = new Date(1);
                 Timestamp timestamp = rs.getTimestamp("fecha");
 
                 int idUser = rs.getInt("usuarios_idusuarios");
                 boolean comprado = true;
-                pedi = new Pedido(idUser, precio_total, timestamp, idProducto, comprado);
+                System.out.println(comprado);
+
+                pedi = new Pedido(id, precio_total, timestamp, idUser, comprado);
                 listaDePedidos.add(pedi);
             }
 
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -100,6 +111,7 @@ public class DB {
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> infoProductoPorId()");
         }
+
         return listaDePedidos;
 
     }
@@ -147,7 +159,8 @@ public class DB {
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -186,7 +199,8 @@ public class DB {
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -216,7 +230,8 @@ public class DB {
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -246,7 +261,8 @@ public class DB {
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -276,7 +292,8 @@ public class DB {
             try {
 
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -316,7 +333,8 @@ public class DB {
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -385,7 +403,8 @@ public class DB {
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -459,7 +478,8 @@ public class DB {
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -516,7 +536,8 @@ public class DB {
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -556,7 +577,8 @@ public class DB {
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -593,7 +615,8 @@ public class DB {
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -624,7 +647,8 @@ public class DB {
                     try {
 
                         pst.close();
-                        cnn.close();System.out.print("cnn close");
+                        cnn.close();
+                        System.out.print("cnn close");
                     } catch (SQLException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
@@ -641,7 +665,8 @@ public class DB {
                     try {
 
                         pst.close();
-                        cnn.close();System.out.print("cnn close");
+                        cnn.close();
+                        System.out.print("cnn close");
                     } catch (SQLException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
@@ -657,7 +682,8 @@ public class DB {
                     try {
 
                         pst.close();
-                        cnn.close();System.out.print("cnn close");
+                        cnn.close();
+                        System.out.print("cnn close");
                     } catch (SQLException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
@@ -667,7 +693,8 @@ public class DB {
                     try {
 
                         pst.close();
-                        cnn.close();System.out.print("cnn close");
+                        cnn.close();
+                        System.out.print("cnn close");
                     } catch (SQLException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
@@ -708,7 +735,8 @@ public class DB {
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -741,14 +769,7 @@ public class DB {
                 String rol = rs.getString("rol");
                 user = new Usuario(id, username, password, email, rol);
             }
-            try {
-                rs.close();
-                pst.close();
-                cnn.close();System.out.print("cnn close");
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+
         } catch (SQLException ex) {
             System.out.println(ex + " PROBLEMAS EN --> infoProductoPorId()");
         }
@@ -783,7 +804,8 @@ public class DB {
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -822,7 +844,8 @@ public class DB {
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -857,7 +880,8 @@ public class DB {
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -887,7 +911,7 @@ public class DB {
 
             while (rs.next()) {
                 id = rs.getInt("idusuarios");
-                System.out.println(id + "<-------------ID USUARIO");
+               
             }
 
             String sql = "SELECT * FROM pedidos WHERE comprado = 1 AND usuarios_idusuarios = ?";
@@ -904,13 +928,14 @@ public class DB {
                 int idUser = rs.getInt("usuarios_idusuarios");
                 boolean comprado = true;
                 pedi = new Pedido(id2, precio_total, fecha, idUser, comprado);
-                System.out.println(pedi);
+                
                 pedidosTramitados.add(pedi);
             }
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -946,7 +971,8 @@ public class DB {
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -985,7 +1011,8 @@ public class DB {
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -1020,7 +1047,8 @@ public class DB {
             try {
                 rs.close();
                 pst.close();
-                cnn.close();System.out.print("cnn close");
+                cnn.close();
+                System.out.print("cnn close");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

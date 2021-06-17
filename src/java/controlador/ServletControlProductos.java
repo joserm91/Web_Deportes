@@ -7,7 +7,7 @@ package controlador;
 
 import dao.DB;
 import java.io.IOException;
-import java.io.PrintWriter;
+
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.Pedido;
-import modelo.Producto;
 
 /**
  *
@@ -25,17 +24,23 @@ import modelo.Producto;
 public class ServletControlProductos extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int idProducto = Integer.parseInt(request.getParameter("productoSeleccionado"));
-
+        String idProducto = request.getParameter("productoSeleccionado");
+        
         HttpSession sesion = request.getSession();
         RequestDispatcher rd;
-        ArrayList<Pedido> listaPedidosContenedores = DB.buscarPedidosContenedores(idProducto);
-        sesion.setAttribute("listaProductosDB", listaPedidosContenedores);
-        rd = request.getRequestDispatcher("pedidosPorProducto.jsp");
-        rd.forward(request, response);
+       
+            int idProd = Integer.parseInt(idProducto);
+            ArrayList<Pedido> listaPedidosContenedores = DB.buscarPedidosContenedores(idProd);
+           sesion.setAttribute("listaProductosDB", null);
+            sesion.setAttribute("listaProductosDB", listaPedidosContenedores);
+           
+            rd = request.getRequestDispatcher("pedidosPorProducto.jsp"); 
+           
+            rd.forward(request, response);
+        
 
     }
 

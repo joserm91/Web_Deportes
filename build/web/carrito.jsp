@@ -344,7 +344,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!-- CARRITO -->
+                                             <!-- CARRITO -->
                     </div>
                 </div>
                 <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-arrow-up fa-2x"></i></button>

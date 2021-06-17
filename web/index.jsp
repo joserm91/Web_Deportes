@@ -10,8 +10,7 @@
         <meta charset="utf-8"/>
         <meta
             name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-            />
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <meta name="description" content="" />
         <meta name="author" content="" />
 
@@ -31,7 +30,9 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
         <!------ Include the above in your HEAD tag ---------->
-         <link rel="shortcut icon" href="imagenes/LogoProductoNike.png" type="image/x-icon" sizes="32x32">
+        <link rel="shortcut icon" href="imagenes/LogoProductoNike.png" type="image/x-icon" sizes="32x32">
+
+
     </head>
     <%
         String registroCorrecto = (String) request.getServletContext().getAttribute("registroCorrecto");
@@ -95,7 +96,7 @@
                                                             <span class="registroCorrecto" style="color: green"><%=registroCorrecto%></span>
                                                             <%
                                                                     registroCorrecto = "";
-                                                                    request.getServletContext().setAttribute("registroCorrecto",registroCorrecto);
+                                                                    request.getServletContext().setAttribute("registroCorrecto", registroCorrecto);
                                                                 }%>
                                                             <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Usuario" value="">
                                                         </div>
@@ -106,7 +107,8 @@
                                                         <div class="form-group">
                                                             <div class="row">
                                                                 <div class="col-sm-6 col-sm-offset-3">
-                                                                    <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Iniciar sesión">
+                                                                    <input type="submit" name="login-submit" id="login-submit" tabindex="4" 
+                                                                           class="form-control btn btn-login" value="Iniciar sesión">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -122,21 +124,46 @@
                                                     </form>
                                                     <form id="register-form" action="ServletRegistro" method="POST" role="form" style="display: none;">
                                                         <div class="form-group">
-                                                            <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Usuario" value="">
+                                                            <input type="text" 
+                                                                   name="username"
+                                                                   id="username" 
+                                                                   tabindex="1" 
+                                                                   class="form-control" 
+                                                                   placeholder="Usuario" value="">
                                                         </div>
                                                         <div class="form-group">
-                                                            <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Correo electronico" value="">
+                                                            <input type="email" 
+                                                                   name="email" 
+                                                                   id="email" 
+                                                                   tabindex="1" 
+                                                                   class="form-control" 
+                                                                   placeholder="Correo electronico"
+                                                                   value="">
                                                         </div>
                                                         <div class="form-group">
-                                                            <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Contraseña">
+                                                            <input type="password" 
+                                                                   name="password" 
+                                                                   id="password" 
+                                                                   tabindex="2" 
+                                                                   class="form-control" 
+                                                                   placeholder="Contraseña">
                                                         </div>
                                                         <div class="form-group">
-                                                            <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirmar contraseña">
+                                                            <input type="password" 
+                                                                   name="confirm-password" 
+                                                                   id="confirm-password" 
+                                                                   tabindex="2" 
+                                                                   class="form-control" 
+                                                                   placeholder="Confirmar contraseña">
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="row">
                                                                 <div class="col-sm-6 col-sm-offset-3">
-                                                                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Crear cuenta">
+                                                                    <input type="submit" 
+                                                                           name="register-submit" 
+                                                                           id="register-submit" tabindex="4" 
+                                                                           class="form-control btn btn-register" 
+                                                                           value="Crear cuenta">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -240,15 +267,15 @@
         <script>
 
             //   ALTER REGISTRO & LOGIN   //
-             window.onload = cambiar;
-            function cambiar(){
-                
-                 $('#register-form-link').removeClass('active');
-                    $('#login-form-link').addClass('active');
-                    e.preventDefault();
-                
+            window.onload = cambiar;
+            function cambiar() {
+
+                $('#register-form-link').removeClass('active');
+                $('#login-form-link').addClass('active');
+                e.preventDefault();
+
             }
-            
+
             //   ALTER REGISTRO & LOGIN   //
         </script>
     </body>

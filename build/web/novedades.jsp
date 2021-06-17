@@ -179,7 +179,7 @@
                         <div class="col-4-lg"> <h2 class="display-3 parah2 mt-4" style="">EQUÍPATE</h2> </div>
 
                     </div>
-                    <div class="container-fluid mt-5 ">
+                    <div class="container-fluid mt-5">
                         <h2 id="catFont">Novedades</h2>
                         <div class="row">
 

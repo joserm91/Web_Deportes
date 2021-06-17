@@ -32,6 +32,11 @@ public class Pedido implements Serializable{
         return idpedidos;
     }
 
+    @Override
+    public String toString() {
+        return "Pedido{" + "idpedidos=" + idpedidos + ", precio_total=" + precio_total + ", fecha=" + fecha + ", usuarios_idusuarios=" + usuarios_idusuarios + ", comprado=" + comprado + '}';
+    }
+
     public void setIdpedidos(int idpedidos) {
         this.idpedidos = idpedidos;
     }
